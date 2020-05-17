@@ -1,0 +1,35 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$adrenaline-app-primary:mat-palette($mat-amber, 400);
+$adrenaline-app-accent : mat-palette($mat-light-blue, A900, A100, A600);
+$adrenaline-app-warn : mat-palette($mat-red);
+$adrenaline-app-theme: mat-light-theme($adrenaline-app-primary, $adrenaline-app-accent, $adrenaline-app-warn);
+@include angular-material-theme($adrenaline-app-theme);
+
+$primary-color :rgba(255, 202, 40, 1);
+$secondary-color:rgba(3, 155, 229, 1);
+$primary-color-report: rgba(255, 202, 40, 1);
+
+.primary-color {
+    color: $primary-color;
+}
+
+.secondary-color {
+    color: $secondary-color;
+}
+
+.theme-bg {
+    background-color: $primary-color;
+    color: $secondary-color;
+}
+
+.theme-bg-report {
+    background-color: $primary-color-report;
+    color: $secondary-color;
+}
+
+.image-center {
+    text-align: center;
+    width: auto;
+    height: auto;
+}
