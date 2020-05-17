@@ -1,12 +1,12 @@
 @import '~@angular/material/theming';
 @include mat-core();
-$adrenaline-app-primary:mat-palette($mat-amber, 400);
-$adrenaline-app-accent : mat-palette($mat-light-blue, A900, A100, A600);
-$adrenaline-app-warn : mat-palette($mat-red);
-$adrenaline-app-theme: mat-light-theme($adrenaline-app-primary, $adrenaline-app-accent, $adrenaline-app-warn);
-@include angular-material-theme($adrenaline-app-theme);
+$dsp-app-primary:mat-palette($mat-green, 600);
+$dsp-app-accent : mat-palette($mat-light-blue, A900, A100, A600);
+$dsp-app-warn : mat-palette($mat-red);
+$dsp-app-theme: mat-light-theme($dsp-app-primary, $dsp-app-accent, $dsp-app-warn);
+@include angular-material-theme($dsp-app-theme);
 
-$primary-color :rgba(255, 202, 40, 1);
+$primary-color :#009D4F;
 $secondary-color:rgba(3, 155, 229, 1);
 $primary-color-report: rgba(255, 202, 40, 1);
 
@@ -33,3 +33,20 @@ $primary-color-report: rgba(255, 202, 40, 1);
     width: auto;
     height: auto;
 }
+
+.routerPadding {
+    padding-top: 70px;
+    position: absolute;
+    left: 210px;
+    right: 10px;
+    margin-left: 600px;
+  }
+  
+  .routerPaddingFold {
+    padding-top: 70px;
+    position: absolute;
+    left: 60px;
+    margin-left: 600px;
+    right: 10px;
+  }
+
