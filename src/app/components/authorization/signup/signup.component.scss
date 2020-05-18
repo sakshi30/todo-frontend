@@ -1,0 +1,72 @@
+.color{
+    color: #57b846
+}
+.card{
+    top: 20px;
+left: 25%;
+opacity: 1;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+text-align: center;
+}
+
+mat-card{
+    width: 50%;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 20px;
+}
+
+.login-title{
+    font-family: 'JosefinSans-Bold';
+    font-size: 30px;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 20px 20px 0 0;
+    background-color: #57b846;
+    padding-top: 50px;
+    padding-bottom: 39px;
+}
+
+.width{
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 80%;
+}
+
+.login_button{
+    padding-left: 30px;
+    padding-right: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 50px;
+    background-color: #57b846;
+    border-radius: 25px;
+    font-family: Ubuntu-Bold;
+    font-size: 15px;
+    color: white;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.login_button:disabled{
+    padding-left: 30px;
+    padding-right: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 50px;
+    background-color: #57b846;
+    border-radius: 25px;
+    font-family: Ubuntu-Bold;
+    font-size: 15px;
+    color: white;
+    line-height: 1.2;
+    text-transform: uppercase;
+}

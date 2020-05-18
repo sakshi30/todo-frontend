@@ -1,1 +1,77 @@
-<p>signup works!</p>
+<div class="container">
+    <div class="form-card">
+        <form #loginForm="ngForm">
+            <mat-card class="card">
+                <mat-card-header class="login-title">
+                    <span><b>Sign Up</b></span>
+                </mat-card-header>
+                <br/><br/><br/><br/><br/><br/><br/>
+                <mat-card-content>
+                    <mat-form-field class="width"  appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" 
+                        placeholder="Username" [(ngModel)]="user.username" #usernameField="ngModel" name="username" required>
+                        <mat-error *ngIf="usernameField.errors?.required && usernameField.touched">
+                        Username is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="width"  appearance="outline">
+                        <mat-label>Email ID</mat-label>
+                        <input matInput type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
+                        placeholder="Email ID" [(ngModel)]="user.email" #emailField="ngModel" name="email" required>
+                        <mat-error *ngIf="emailField.errors?.required && emailField.touched">
+                        Email Id is required</mat-error>
+                        <mat-error *ngIf="emailField.errors?.pattern">Email Id is invalid
+                        </mat-error>
+                        
+                    </mat-form-field>
+                    <mat-form-field class="width" appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput #x type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                          placeholder="Password" [(ngModel)]="user.password" #passwordField="ngModel" name="password" required>
+                        <button mat-button matSuffix (click)="x.type=x.type=='password'?'text':'password'">
+                          <span *ngIf="x.type == 'password'">Show</span>
+                          <span *ngIf="x.type == 'text'">Hide</span>
+                        </button>
+                        <mat-error *ngIf="passwordField.errors?.required && passwordField.touched">
+                          Password is required</mat-error>
+                          <mat-error *ngIf="passwordField.errors?.pattern">
+                            Password must contain a small letter, a capital letter, a number and a special character</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="width" appearance="outline">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput type="password" pattern="{{ passwordField.value }}" placeholder="Confirm Password"
+                          [(ngModel)]="password2" #confirmPasswordField="ngModel" name="password2" required>
+                        <mat-error *ngIf="confirmPasswordField.errors?.required && confirmPasswordField.touched">
+                          Please confirm your password</mat-error>
+                        <br />
+                        <mat-error
+                          *ngIf="confirmPasswordField.invalid && confirmPasswordField.touched &&  !confirmPasswordField.errors?.required">
+                          Passwords donot match</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="width"  appearance="outline">
+                        <mat-label>Please select a security question</mat-label>
+                        <mat-select [(ngModel)]="user.security_question" name="question">
+                          <mat-option *ngFor="let question of security_questions" [value]="question">
+                            {{question}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field class="width"  appearance="outline">
+                        <mat-label>Please select an answer to your question</mat-label>
+                        <input matInput type="text" placeholder="Please select an answer to your question" 
+                        [(ngModel)]="user.security_answer" #securityanswer="ngModel" name="answer" required>
+                        <mat-error *ngIf="securityanswer.errors?.required && securityanswer.touched">
+                        Security Answer is required</mat-error>
+                    </mat-form-field>
+                    
+                    <button class="login_button" type="button" (click)="signupUser()" [disabled]="loginForm.form.invalid"
+                        mat-stroked-button>
+                        <strong>SIGN UP</strong>
+                    </button>
+                    <br/><br/>
+                </mat-card-content>
+            </mat-card>
+        </form>
+    </div>
+</div>
