@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,9 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 export class LoginComponent implements OnInit {
 
   public user: User  = {username: '', password: '', email: '', security_answer: '', security_question: ''}
-  constructor(private _auth: AuthorizationService) { }
+  constructor(
+    private _auth: AuthorizationService,
+    private _toast: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -19,9 +22,9 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this._auth.loginUser(this.user)
       .subscribe(loggedUser => {
-        console.log(loggedUser)
+        this._toast.success(loggedUser.status)
       }, error => {
-        console.log(error)
+        this._toast.error(error)
       })
   }
 
