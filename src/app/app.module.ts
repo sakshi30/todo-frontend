@@ -8,6 +8,7 @@ import { HeadComponent } from './shared/head/head.component';
 import { AuthorizationModule } from './components/authorization/authorization.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { TodoListModule } from './components/todo-list/todo-list.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    AuthorizationModule.forRoot()
+    AuthorizationModule.forRoot(),
+    TodoListModule.forRoot()
   ],
   providers: [
   ],

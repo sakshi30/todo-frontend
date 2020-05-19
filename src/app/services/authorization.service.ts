@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from "rxjs/operators";
 import { HandleErrorService } from './handle-error.service';
@@ -10,6 +10,10 @@ import { HandleErrorService } from './handle-error.service';
   providedIn: 'root'
 })
 export class AuthorizationService {
+
+  public isAuthenticated: Boolean = false;
+  private loggedInUser = new Subject<User>();
+  public getUserDetails = this.loggedInUser.asObservable();
 
   constructor(private _http: HttpClient,
     private _error: HandleErrorService) { }
@@ -21,6 +25,10 @@ export class AuthorizationService {
   loginUser(user: User): Observable<any>{
     return this._http.post(environment.API_LOCAL+'api/user/login', user)
     .pipe(
+      map(res => {
+        this.storeUserCredentials(res);
+        return res;
+      }),
       catchError(error => {
         return this._error.processError(error);
       }));
@@ -52,6 +60,23 @@ export class AuthorizationService {
       }));
   }
 
+  //store user details and set flag 
+  storeUserCredentials(user) {
+    localStorage.setItem('current_user', JSON.stringify(user.value));
+    this.sendDetails(user.value);
+    this.isAuthenticated = true;
+  }
+
+  //send user details from localStorage
+  sendUserDetails() {
+    return JSON.parse(localStorage.getItem('current_user'));
+  }
+
+
+  //send the logged in user's credential
+  sendDetails(user: User) {
+    this.loggedInUser.next(user);
+  }
   /**
    * 
    * @param user used to check if the user who has forgot his password 
