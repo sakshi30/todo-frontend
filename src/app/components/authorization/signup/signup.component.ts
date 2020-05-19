@@ -32,7 +32,6 @@ export class SignupComponent implements OnInit {
     this._toast.info("Registering user...")
     this._auth.registerUser(this.user)
         .subscribe(userRegistered => {
-          console.log(userRegistered)
             this._toast.success(userRegistered.status)
             this._router.navigate(['/login'])
           },
