@@ -9,6 +9,7 @@ import { AuthorizationModule } from './components/authorization/authorization.mo
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { TodoListModule } from './components/todo-list/todo-list.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TodoListModule } from './components/todo-list/todo-list.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatIconModule,
     ToastrModule.forRoot(),
     AuthorizationModule.forRoot(),
     TodoListModule.forRoot()
