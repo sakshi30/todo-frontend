@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
 
 
   loginUser() {
+    this._toast.info('Verifying user. Please wait..')
     this._auth.loginUser(this.user)
       .subscribe(loggedUser => {
         this._toast.success(loggedUser.status)

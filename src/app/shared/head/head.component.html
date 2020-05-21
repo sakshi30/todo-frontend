@@ -1,1 +1,25 @@
-<div *ngIf="isLoggedIn">MENU</div>
+<div *ngIf="isLoggedIn">
+    <div class="p-2" style="z-index: 10001; font-size: 16px;">
+        <span *ngIf="_auth.navbarOpen" style="padding-left: 40px;">
+            {{user.username}}
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <button class="btn btn-link" style="color: black; outline: none;" (click)="openNavbar()">
+                <mat-icon aria-hidden="false">menu</mat-icon>
+            </button> 
+        </span>
+        <button *ngIf="!_auth.navbarOpen" class="btn btn-link" style="color: black; outline: none;" (click)="openNavbar()">
+            <mat-icon aria-hidden="false">menu</mat-icon>
+        </button>   
+    </div>
+    
+      
+    <div [ngClass]="{'menuFold': !_auth.navbarOpen, 'menu': _auth.navbarOpen}"
+    style="background: #FFFFFF 0% 0% no-repeat padding-box;box-shadow: 0px 3px 8px #3C775A21;opacity: 1;">
+        <div class="p-3 position-absolute" style="font-size: 16px; padding-left: 40px;">
+            <a><mat-icon aria-hidden="false">arrow_upward</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;Upcoming Tasks</a>
+            <br/><br/>
+            <a><mat-icon aria-hidden="false">archive</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;Archieved Tasks</a>
+            
+        </div>
+    </div>
+</div>

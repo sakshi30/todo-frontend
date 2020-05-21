@@ -13,7 +13,8 @@ export class HeadComponent implements OnInit {
   public isLoggedIn: Boolean = false;
   public subscription: Subscription;
   public user: User;
-
+  public navbarOpen = false;
+  
   constructor(private _auth: AuthorizationService) { 
     //subscribe to user login
     this.subscription = this._auth.getUserDetails
@@ -31,5 +32,14 @@ export class HeadComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  /**
+   * Open Navbar
+   */
+  openNavbar(){
+    this.navbarOpen = !this.navbarOpen
+    this._auth.navbarOpen = this.navbarOpen
+  }
+
 
 }

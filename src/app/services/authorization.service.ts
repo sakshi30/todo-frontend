@@ -14,7 +14,9 @@ export class AuthorizationService {
   public isAuthenticated: Boolean = false;
   private loggedInUser = new Subject<User>();
   public getUserDetails = this.loggedInUser.asObservable();
-
+  public currentURL: string = '';
+  public navbarOpen: boolean = false;
+  
   constructor(private _http: HttpClient,
     private _error: HandleErrorService) { }
 
@@ -88,5 +90,11 @@ export class AuthorizationService {
       catchError(error => {
         return this._error.processError(error);
       }));
+  }
+
+
+  //check if the user is logged in
+  isLoggedIn() {
+    return this.isAuthenticated;
   }
 }
