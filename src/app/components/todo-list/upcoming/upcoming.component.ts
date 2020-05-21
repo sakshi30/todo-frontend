@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetListService } from 'src/app/services/get-list.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upcoming',
@@ -18,7 +19,9 @@ export class UpcomingComponent implements OnInit {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private _list: GetListService) { 
+  constructor(
+    private _list: GetListService,
+    private _router: Router) { 
     let userId = '5ec3b3dd4af0c129dc7678b2';
     this._curr = new Date();
     this._list.getTaskList(userId).subscribe(data => { 
@@ -37,6 +40,10 @@ export class UpcomingComponent implements OnInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => { console.log(this._todo) }, 1000);
+  }
+
+  createTask(){
+    this._router.navigate(['/addTask'])
   }
 
 }

@@ -8,11 +8,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { AddTaskComponent } from './add-task/add-task.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     UpcomingComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    AddTaskComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +27,11 @@ import { MatSortModule } from '@angular/material/sort';
     MatIconModule,
     MatSidenavModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FlexLayoutModule
   ]
 })
 export class TodoListModule { 

@@ -10,6 +10,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { TodoListModule } from './components/todo-list/todo-list.module';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     HttpClientModule,
     MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule,
     ToastrModule.forRoot(),
     AuthorizationModule.forRoot(),
     TodoListModule.forRoot()

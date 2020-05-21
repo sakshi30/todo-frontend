@@ -1,3 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-head></app-head>
-<router-outlet></router-outlet>
+<div [ngClass]="{'routerFold': !isLoggedIn, 'router': isLoggedIn}">
+    <router-outlet #o="outlet"></router-outlet>
+</div>
