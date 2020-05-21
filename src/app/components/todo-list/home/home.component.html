@@ -1,0 +1,13 @@
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class='sidenav' mode='slide'>
+    Menu
+  </mat-drawer>
+  <div class="sidenav-content">
+    <button mat-icon-button class='' (click)='drawer.toggle()'>
+      <mat-icon>Menu</mat-icon>
+    </button>
+  </div>
+</mat-drawer-container>

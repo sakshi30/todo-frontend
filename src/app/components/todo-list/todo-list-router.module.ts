@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { ArchiveComponent } from './archive/archive.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [{
     path: 'upcoming',
@@ -10,7 +11,12 @@ const routes: Routes = [{
 {
     path: 'archive',
     component: ArchiveComponent
-}];
+},
+{
+  path: 'home',
+  component: HomeComponent
+}  
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
