@@ -16,7 +16,7 @@ export class AuthorizationService {
   public getUserDetails = this.loggedInUser.asObservable();
   public currentURL: string = '';
   public navbarOpen: boolean = false;
-  
+
   constructor(private _http: HttpClient,
     private _error: HandleErrorService) { }
 
@@ -64,14 +64,14 @@ export class AuthorizationService {
 
   //store user details and set flag 
   storeUserCredentials(user) {
-    localStorage.setItem('current_user', JSON.stringify(user.value));
+    localStorage.setItem('user_tasks', JSON.stringify(user.tasks));
     this.sendDetails(user.value);
     this.isAuthenticated = true;
   }
 
   //send user details from localStorage
   sendUserDetails() {
-    return JSON.parse(localStorage.getItem('current_user'));
+    return JSON.parse(localStorage.getItem('user_tasks'));
   }
 
 

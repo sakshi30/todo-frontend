@@ -5,10 +5,59 @@
     <mat-card>
         <mat-form-field class="w-100 h-100" appearance="outline">
             <mat-label>What's on your mind?</mat-label>
-            <textarea matInput rows="10" placeholder="What's on your mind?"></textarea>
+            <textarea matInput rows="10" placeholder="What's on your mind?" [(ngModel)]="created_task.value" name="task_value"></textarea>
         </mat-form-field>
         <div fxLayout="row" fxLayoutGap="10%" fxLayoutWrap>
-            
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-chip-list #chipList aria-label="Label selection">
+                  <mat-chip *ngFor="let label of created_task.labels" (removed)="remove(label)">
+                    {{label}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    placeholder="Select or add labels"
+                    #labelInput
+                    [formControl]="labelCtrl"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                  <mat-option *ngFor="let label of filteredLabels | async" [value]="label">
+                    {{label}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-chip-list #statusList aria-label="Status selection">
+                  <mat-chip *ngFor="let status of created_task.status" (removed)="removeStatus(status)">
+                    {{status}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    placeholder="Select or add status"
+                    #statusInput
+                    [formControl]="statusCtrl"
+                    [matAutocomplete]="autoStatus"
+                    [matChipInputFor]="statusList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addStatus($event)">
+                </mat-chip-list>
+                <mat-autocomplete #autoStatus="matAutocomplete" (optionSelected)="selectedStatus($event)">
+                  <mat-option *ngFor="let status of filteredStatus | async" [value]="status">
+                    {{status}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field color="primary" class="w-100" appearance="outline">
+                <mat-label>Due date</mat-label>
+                <input matInput [matDatepicker]="picker1" [(ngModel)]="created_task.date" name="date">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
         </div>
+        <button mat-button (click)="createTask()" class="button">Create Task</button>
+        <br/><br/><br/>
     </mat-card>
 </div>
