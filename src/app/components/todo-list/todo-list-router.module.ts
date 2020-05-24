@@ -6,6 +6,8 @@ import { LoginGuard } from 'src/app/shared/login.guard';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { LabelComponent } from './label/label.component';
 import { StatusComponent } from './status/status.component';
+import { LabelDetComponent } from './label-det/label-det.component';
+import { StatusDetComponent } from './status-det/status-det.component';
 
 const routes: Routes = [{
     path: 'upcoming',
@@ -29,7 +31,16 @@ const routes: Routes = [{
     path: 'addTask',
     component: AddTaskComponent,
     canActivate: [LoginGuard]
-}];
+},
+{
+  path: 'labelDet',
+  component: LabelDetComponent
+},
+{
+  path: 'statusDet',
+  component: StatusDetComponent
+}
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
