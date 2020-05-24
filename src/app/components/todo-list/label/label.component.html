@@ -1,0 +1,29 @@
+<div class="container">
+  <br/>
+  <h2><b>Labels</b></h2>
+  <!-- <div class="header-right">
+    <button mat-button (click)="addLabel()" class="button"><mat-icon>add</mat-icon> New Label</button>
+    <br/><br/>
+  </div> -->
+
+  <div class="add_new">
+    <mat-card>
+      <div fxLayout="row" fxLayoutGap="10%" fxLayoutWrap>
+        <mat-form-field class="w-100 h-100" appearance="outline">
+          <mat-label>New Label</mat-label>
+          <input matInput rows="10" placeholder="New Label" [(ngModel)]="new_label" name="new_label">
+        </mat-form-field>
+        <button mat-button (click)="addLabel()" class="button">Add Label</button>
+      </div>
+    </mat-card>
+  <div>
+  
+  <table mat-table [dataSource]='_dataSource' matSort multiTemplateDataRows>
+    <ng-container matColumnDef='label'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Labels</th>
+      <td mat-cell *matCellDef="let element">{{element}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="_cols; sticky: true;"></tr>
+    <tr mat-row *matRowDef="let row; columns: _cols"></tr>
+  </table>
+</div>

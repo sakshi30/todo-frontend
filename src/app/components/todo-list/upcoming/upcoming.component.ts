@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UpcomingComponent implements OnInit {
 
-  private _todo: any[];
+  private _todo: any[] = [];
 
   private _curr: any;
   private _cols: string[] = ['date', 'to-do', 'label', 'status'];
@@ -22,7 +22,7 @@ export class UpcomingComponent implements OnInit {
   constructor(
     private _list: GetListService,
     private _router: Router) { 
-    let userId = '5ec3b3dd4af0c129dc7678b2';
+    let userId = '5ec3c5187ea72e2c5cdedd80';
     this._curr = new Date();
     this._list.getTaskList(userId).subscribe(data => { 
       let tasks = JSON.parse(data)['task'];
@@ -33,13 +33,14 @@ export class UpcomingComponent implements OnInit {
       this._todo = tasks;
       this._dataSource = new MatTableDataSource(this._todo);
       this._dataSource.sort = this.sort;
+      console.log(this._todo, this._dataSource);
     });
     
   }
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    setTimeout(() => { console.log(this._todo) }, 1000);
+    // setTimeout(() => { console.log(this._todo) }, 1000);
   }
 
   createTask(){
