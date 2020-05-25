@@ -9,6 +9,6 @@ export interface ToDo{
 export interface Task{
     value: string;
     date:  any;
-    labels: string[];
+    label: string[];
     status: string[];
 }

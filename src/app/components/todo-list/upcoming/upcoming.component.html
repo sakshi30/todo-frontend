@@ -23,6 +23,13 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
       <td mat-cell *matCellDef="let element">{{element.status}}</td>
     </ng-container>
+    <ng-container matColumnDef='action'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="option" (click)="editItem(element)" style="cursor: pointer;"><mat-icon>edit</mat-icon></span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </td>
+    </ng-container>
     <!-- <ng-container matColumnDef='action'>
       <th mat-header-cell *matHeaderCellDef mat-sort-header>to-do</th>
       <td mat-cell *matCellDef="let element">{{element.value}}</td>

@@ -14,7 +14,7 @@ export class UpcomingComponent implements OnInit {
   private _todo: any[] = [];
 
   private _curr: any;
-  private _cols: string[] = ['date', 'to-do', 'label', 'status'];
+  private _cols: string[] = ['date', 'to-do', 'label', 'status', 'action'];
   private _dataSource: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -44,6 +44,11 @@ export class UpcomingComponent implements OnInit {
 
   createTask(){
     this._router.navigate(['/addTask'])
+  }
+
+
+  editItem(item){
+    this._router.navigate(['/addTask', {data: {'item': '5'}}]);
   }
 
 }

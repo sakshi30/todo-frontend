@@ -10,12 +10,12 @@
         <div fxLayout="row" fxLayoutGap="10%" fxLayoutWrap>
             <mat-form-field class="w-100" appearance="outline">
                 <mat-chip-list #chipList aria-label="Label selection">
-                  <mat-chip *ngFor="let label of created_task.labels" (removed)="remove(label)">
+                  <mat-chip *ngFor="let label of created_task.label" (removed)="remove(label)">
                     {{label}}
                     <mat-icon matChipRemove>cancel</mat-icon>
                   </mat-chip>
                   <input
-                    placeholder="Select or add labels"
+                    placeholder="Select or press enter to add labels"
                     #labelInput
                     [formControl]="labelCtrl"
                     [matAutocomplete]="auto"
@@ -36,7 +36,7 @@
                     <mat-icon matChipRemove>cancel</mat-icon>
                   </mat-chip>
                   <input
-                    placeholder="Select or add status"
+                    placeholder="Select or press enter to add status"
                     #statusInput
                     [formControl]="statusCtrl"
                     [matAutocomplete]="autoStatus"
