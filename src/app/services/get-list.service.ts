@@ -13,12 +13,20 @@ export class GetListService {
   constructor(private _http: HttpClient,
     private _error: HandleErrorService) { }
 
-  getData(userId, opt) {
-    let url: string = environment.API_LOCAL+'api/task/'+userId+'/'+opt;
-    console.log(url);
-    return this._http.get(url).pipe(map(res => { 
-      return JSON.stringify(res); }
-    ));
+  /* task */
+  getTaskList(userId, archieved): Observable<any> {
+    let url: string = environment.API_LOCAL+'api/task/tasks/'+userId+'/'+archieved;
+    return this._http.get(url).pipe(map(res => {
+      return JSON.stringify(res);
+    }));
+  }
+
+  getUpcomingTask(userId): Observable<any> {
+    return this.getTaskList(userId, 0);
+  }
+
+  getArchievedTask(userId): Observable<any> {
+    return this.getTaskList(userId, 1);
   }
 
   storeData(data): Observable<any>{
@@ -29,8 +37,12 @@ export class GetListService {
       }));
   }
 
-  getTaskList(userId): Observable<any> {
-    return this.getData(userId, 1);
+  /* attributes */
+  getData(userId, opt) {
+    let url: string = environment.API_LOCAL+'api/task/'+userId+'/'+opt;
+    return this._http.get(url).pipe(map(res => { 
+      return JSON.stringify(res);
+    }));
   }
 
   getLabelList(userId): Observable<any> {
@@ -41,6 +53,7 @@ export class GetListService {
     return this.getData(userId, 3);
   }
 
+  /* tasks by attributes */
   getDataByAttr(userId, opt, val) {
     let url: string = environment.API_LOCAL+'api/task/attr';
     let data: any = { 'userId': userId }
