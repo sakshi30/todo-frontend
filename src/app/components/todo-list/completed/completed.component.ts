@@ -2,19 +2,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetListService } from 'src/app/services/get-list.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-upcoming',
-  templateUrl: './upcoming.component.html',
-  styleUrls: ['./upcoming.component.sass']
+  selector: 'app-completed',
+  templateUrl: './completed.component.html',
+  styleUrls: ['./completed.component.css']
 })
-export class UpcomingComponent implements OnInit {
+export class CompletedComponent implements OnInit {
 
   private _todo: any[] = [];
 
   private _curr: any;
-  private _cols: string[] = ['date', 'to-do', 'label', 'status', 'action'];
+  private _cols: string[] = ['date', 'to-do', 'label', 'status'];
   private _dataSource: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -27,7 +27,7 @@ export class UpcomingComponent implements OnInit {
     this._list.getTaskList(userId, 0).subscribe(data => { 
       let tasks = JSON.parse(data);
       tasks.forEach(ele => {
-        // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
+        // if(ele['task']['dueDate']>=this._curr) //convert this to 'due date' later, not yet implemented in the backend
           this._todo.push(ele['task']);
       });
       this._dataSource = new MatTableDataSource(this._todo);
@@ -43,14 +43,7 @@ export class UpcomingComponent implements OnInit {
   }
 
   createTask(){
-    this._list.sendData(null);
     this._router.navigate(['/addTask'])
-  }
-
-
-  editItem(item){
-    this._list.sendData(item);
-    this._router.navigate(['/addTask']);
   }
 
 }

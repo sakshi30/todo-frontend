@@ -9,6 +9,7 @@ import { StatusComponent } from './status/status.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { LabelDetComponent } from './label-det/label-det.component';
 import { StatusDetComponent } from './status-det/status-det.component';
+import { CompletedComponent } from './completed/completed.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +26,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 
-
 @NgModule({
   declarations: [
     UpcomingComponent,
@@ -34,7 +34,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     LabelComponent,
     StatusComponent,
     LabelDetComponent,
-    StatusDetComponent
+    StatusDetComponent,
+    CompletedComponent
   ],
   imports: [
     CommonModule,

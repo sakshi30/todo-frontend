@@ -8,6 +8,7 @@ import { LabelComponent } from './label/label.component';
 import { StatusComponent } from './status/status.component';
 import { LabelDetComponent } from './label-det/label-det.component';
 import { StatusDetComponent } from './status-det/status-det.component';
+import { CompletedComponent } from './completed/completed.component';
 
 const routes: Routes = [{
     path: 'upcoming',
@@ -18,6 +19,11 @@ const routes: Routes = [{
     path: 'archive',
     component: ArchiveComponent,
     canActivate: [LoginGuard]
+},
+{
+  path: 'completed',
+  component: CompletedComponent,
+  canActivate: [LoginGuard]
 },
 {
   path: 'label',
