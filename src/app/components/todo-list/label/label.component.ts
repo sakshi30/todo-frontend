@@ -33,7 +33,4 @@ export class LabelComponent implements OnInit {
     alert('not yet implemented');
   }
 
-  labelDet(event) {
-    alert("will show all the notes of label: " + event);
-  }
 }

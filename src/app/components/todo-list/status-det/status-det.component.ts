@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetListService } from 'src/app/services/get-list.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-status-det',
@@ -22,9 +22,9 @@ export class StatusDetComponent implements OnInit {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(
-    private _list: GetListService,
-    private _router: Router) {
+  constructor( private _list: GetListService, private _activatedRoute: ActivatedRoute ) {
+    this._status = this._activatedRoute.snapshot.paramMap.get('status');
+
     this._list.tasksByStatus(this._userId, this._status).subscribe(data => { 
       let tasks = JSON.parse(data);
       tasks.forEach(t => {
@@ -32,7 +32,6 @@ export class StatusDetComponent implements OnInit {
       });
       this._dataSource = new MatTableDataSource(this._todo);
       this._dataSource.sort = this.sort;
-      console.log(this._todo, this._dataSource);
       });
   }
 

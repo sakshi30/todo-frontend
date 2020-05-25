@@ -33,11 +33,11 @@ const routes: Routes = [{
     canActivate: [LoginGuard]
 },
 {
-  path: 'labelDet',
+  path: 'labelDet/:label',
   component: LabelDetComponent
 },
 {
-  path: 'statusDet',
+  path: 'statusDet/:status',
   component: StatusDetComponent
 }
 ];
