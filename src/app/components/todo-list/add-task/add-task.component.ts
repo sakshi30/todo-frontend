@@ -9,6 +9,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ToDo, Task } from 'src/app/models/todo';
 import { GetListService } from 'src/app/services/get-list.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
@@ -17,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddTaskComponent implements OnInit {
  
-  public created_task: Task = {value: '', labels: [], status: [], date: {}}
+  public created_task: Task = {value: '', label: [], status: [], date: {}}
   public tasks: ToDo =  {userId: '', task: this.created_task, label: [], status: [], _id: '' };
   visible = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -37,8 +38,10 @@ export class AddTaskComponent implements OnInit {
   constructor(
     private _auth: AuthorizationService,
     private _todo: GetListService,
-    private _toast: ToastrService) {
+    private _toast: ToastrService,
+    private _router: ActivatedRoute) {
     this.tasks = this._auth.sendUserDetails()[0]
+    console.log("Tasks", this.tasks);
     if(this.tasks){
       this.filteredLabels = this.labelCtrl.valueChanges.pipe(
         startWith(null),
@@ -52,6 +55,8 @@ export class AddTaskComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    var data = this._router.snapshot.paramMap.get('item');
+    console.log(data);
   }
 
   add(event: MatChipInputEvent): void {
@@ -62,7 +67,7 @@ export class AddTaskComponent implements OnInit {
     if ((value || '').trim()) {
       if(!this.all_labels.includes(value.trim())){
         this.all_labels.push(value.trim())
-        this.created_task.labels.push(value.trim());
+        this.created_task.label.push(value.trim());
       }
     }
 
@@ -96,14 +101,14 @@ export class AddTaskComponent implements OnInit {
   }
 
   remove(label: string): void {
-    const index = this.created_task.labels.indexOf(label);
+    const index = this.created_task.label.indexOf(label);
 
     if (index >= 0) {
-      this.created_task.labels.splice(index, 1);
+      this.created_task.label.splice(index, 1);
     }
   }
 
-  removeSatus(status: string): void {
+  removeStatus(status: string): void {
     const index = this.created_task.status.indexOf(status);
 
     if (index >= 0) {
@@ -112,8 +117,8 @@ export class AddTaskComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    if(!this.created_task.labels.includes(event.option.viewValue))
-    this.created_task.labels.push(event.option.viewValue);
+    if(!this.created_task.label.includes(event.option.viewValue))
+    this.created_task.label.push(event.option.viewValue);
     this.labelInput.nativeElement.value = '';
     this.labelCtrl.setValue(null);
   }
@@ -145,10 +150,19 @@ export class AddTaskComponent implements OnInit {
     object.val = {task: this.created_task, label: this.all_labels, status: this.all_status}
     this._todo.storeData(object).subscribe(result => {
       this._toast.success(result.status);
+      this.resetForm();
 
     }, (error) => {
       this._toast.error(error);
     })
+  }
+
+
+  resetForm(){
+    this.created_task.value = '';
+    this.created_task.label = [];
+    this.created_task.status = [];
+    this.created_task.date = {};
   }
 
 }

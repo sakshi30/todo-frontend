@@ -40,4 +40,5 @@ export class GetListService {
   getStatusList(userId): Observable<any> {
     return this.getData(userId, 3);
   }
+  
 }
