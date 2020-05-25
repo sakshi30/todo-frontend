@@ -28,6 +28,7 @@
       <td mat-cell *matCellDef="let element">
         <span class="option" (click)="editItem(element)" style="cursor: pointer;"><mat-icon>edit</mat-icon></span>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="option" (click)="archiveItem(element)" style="cursor: pointer;"><mat-icon>archive</mat-icon></span>
       </td>
     </ng-container>
     <!-- <ng-container matColumnDef='action'>

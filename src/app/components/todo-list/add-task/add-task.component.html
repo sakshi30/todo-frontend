@@ -1,6 +1,7 @@
 <div class="container">
     <br/>
-    <h2><b>Add Task</b></h2>
+    <h2 *ngIf="!updated_task"><b>Add Task</b></h2>
+    <h2 *ngIf="updated_task"><b>Update Task</b></h2>
     <br/>
     <mat-card>
         <mat-form-field class="w-100 h-100" appearance="outline">
@@ -57,7 +58,8 @@
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
         </div>
-        <button mat-button (click)="createTask()" class="button">Create Task</button>
+        <button mat-button (click)="createTask()" class="button" *ngIf="!updated_task">Create Task</button>
+        <button mat-button (click)="updateTask()" class="button" *ngIf="updated_task">Update Task</button>
         <br/><br/><br/>
     </mat-card>
 </div>

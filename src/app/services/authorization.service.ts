@@ -64,16 +64,20 @@ export class AuthorizationService {
 
   //store user details and set flag 
   storeUserCredentials(user) {
+    localStorage.setItem('user', JSON.stringify(user.value));
     localStorage.setItem('user_tasks', JSON.stringify(user.tasks));
     this.sendDetails(user.value);
     this.isAuthenticated = true;
   }
 
   //send user details from localStorage
-  sendUserDetails() {
+  sendTaskDetails() {
     return JSON.parse(localStorage.getItem('user_tasks'));
   }
 
+  sendUserDetails() {
+    return JSON.parse(localStorage.getItem('user'));
+  }
 
   //send the logged in user's credential
   sendDetails(user: User) {

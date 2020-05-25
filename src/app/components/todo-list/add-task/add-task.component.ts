@@ -1,9 +1,9 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ToDo, Task } from 'src/app/models/todo';
@@ -16,9 +16,9 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss']
 })
-export class AddTaskComponent implements OnInit {
+export class AddTaskComponent implements OnInit, OnDestroy {
  
-  public created_task: Task = {value: '', label: [], status: [], date: {}}
+  public created_task: Task = {value: '', label: [], status: [], date: {}, _id: ''}
   public tasks: ToDo =  {userId: '', task: this.created_task, label: [], status: [], _id: '' };
   visible = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -28,7 +28,8 @@ export class AddTaskComponent implements OnInit {
   all_status: string[] =[];
   statusCtrl = new FormControl();
   filteredStatus: Observable<string[]>;
-
+  updated_task = false;
+  data_subscription: Subscription;
   @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
@@ -39,9 +40,19 @@ export class AddTaskComponent implements OnInit {
     private _auth: AuthorizationService,
     private _todo: GetListService,
     private _toast: ToastrService,
-    private _router: ActivatedRoute) {
-    this.tasks = this._auth.sendUserDetails()[0]
-    console.log("Tasks", this.tasks);
+    private _router: Router) {
+    this.tasks = this._auth.sendTaskDetails()[0]
+    this.data_subscription =  this._todo.dataObservable.subscribe(result => {
+      if(result){
+        this.updated_task = true;
+        this.created_task = result
+      }
+      else{
+        this.updated_task = false;
+        this.created_task = {_id: '', value: '', label: [], status: [], date: {}};
+      }
+    })
+    
     if(this.tasks){
       this.filteredLabels = this.labelCtrl.valueChanges.pipe(
         startWith(null),
@@ -55,8 +66,7 @@ export class AddTaskComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    var data = this._router.snapshot.paramMap.get('item');
-    console.log(data);
+    
   }
 
   add(event: MatChipInputEvent): void {
@@ -163,6 +173,24 @@ export class AddTaskComponent implements OnInit {
     this.created_task.label = [];
     this.created_task.status = [];
     this.created_task.date = {};
+  }
+
+  updateTask(){
+    var object = {userid: '', val: {}, taskId: ''}
+    object.taskId = this.created_task._id;
+    object.val = {value: this.created_task.value, label: this.created_task.label, status: this.created_task.status};
+    object.userid = this.tasks.userId;
+    this._todo.updateTask(object).subscribe(result => {
+      this._toast.success(result.status);
+
+    }, (error) => {
+      this._toast.error(error);
+    })
+  }
+
+
+  ngOnDestroy(){
+    this.data_subscription.unsubscribe();
   }
 
 }

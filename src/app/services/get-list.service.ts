@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
@@ -10,12 +10,14 @@ import { HandleErrorService } from './handle-error.service';
 })
 export class GetListService {
 
+  public dataSubject = new BehaviorSubject(null);
+  public dataObservable = this.dataSubject.asObservable();
+
   constructor(private _http: HttpClient,
     private _error: HandleErrorService) { }
 
   getData(userId, opt) {
     let url: string = environment.API_LOCAL+'api/task/'+userId+'/'+opt;
-    console.log(url);
     return this._http.get(url).pipe(map(res => { 
       return JSON.stringify(res); }
     ));
@@ -23,6 +25,14 @@ export class GetListService {
 
   storeData(data): Observable<any>{
     return this._http.post(environment.API_LOCAL+'api/task/add', data)
+    .pipe(
+      catchError(error => {
+        return this._error.processError(error);
+      }));
+  }
+
+  updateTask(data): Observable<any>{
+    return this._http.get(environment.API_LOCAL+'api/task/update', data)
     .pipe(
       catchError(error => {
         return this._error.processError(error);
@@ -60,5 +70,9 @@ export class GetListService {
 
   tasksByStatus(userId, status) {
     return this.getDataByAttr(userId, 3, status);
+  }
+
+  sendData(data){
+    this.dataSubject.next(data);
   }
 }

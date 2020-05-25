@@ -24,13 +24,18 @@ tr:hover {
   float: right
 }
 
+.dark_bg{
+  background-color: $primary-color;
+  color: white;
+  font-size: 16px;
+}
 .button{
     background-color: $primary-color;
     color: white;
     border-radius: 6px;
-    width: 273px;
+    width: 200px;
     height: 50px;
-    position: relative;
-    right: 5%;
+    position: absolute;
+    right: 15%;
     opacity: 1;
 }

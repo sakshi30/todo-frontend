@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetListService } from 'src/app/services/get-list.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-upcoming',
@@ -44,12 +44,14 @@ export class UpcomingComponent implements OnInit {
   }
 
   createTask(){
+    this._list.sendData(null);
     this._router.navigate(['/addTask'])
   }
 
 
   editItem(item){
-    this._router.navigate(['/addTask', {data: {'item': '5'}}]);
+    this._list.sendData(item);
+    this._router.navigate(['/addTask']);
   }
 
 }
