@@ -7,6 +7,8 @@ import { ArchiveComponent } from './archive/archive.component';
 import { LabelComponent } from './label/label.component';
 import { StatusComponent } from './status/status.component';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { LabelDetComponent } from './label-det/label-det.component';
+import { StatusDetComponent } from './status-det/status-det.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,13 +25,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 
+
 @NgModule({
   declarations: [
     UpcomingComponent,
     ArchiveComponent,
     AddTaskComponent,
     LabelComponent,
-    StatusComponent
+    StatusComponent,
+    LabelDetComponent,
+    StatusDetComponent
   ],
   imports: [
     CommonModule,

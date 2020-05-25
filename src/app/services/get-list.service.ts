@@ -40,5 +40,25 @@ export class GetListService {
   getStatusList(userId): Observable<any> {
     return this.getData(userId, 3);
   }
-  
+
+  getDataByAttr(userId, opt, val) {
+    let url: string = environment.API_LOCAL+'api/task/attr';
+    let data: any = { 'userId': userId }
+    if(opt==2) {
+      data['val'] = { 'label': val }
+    } else if(opt==3) {
+      data['val'] = { 'status': val }
+    }
+    return this._http.post(url, data).pipe(map(res => {
+      return JSON.stringify(res);
+    }))
+  }
+
+  tasksByLabel(userId, label) {
+    return this.getDataByAttr(userId, 2, label);
+  }
+
+  tasksByStatus(userId, status) {
+    return this.getDataByAttr(userId, 3, status);
+  }
 }
