@@ -1,0 +1,17 @@
+<div class="container">
+    <br/>
+  <h2 *ngIf="!update"><b>Create Label</b></h2>
+  <h2 *ngIf="update"><b>Update Label</b></h2>
+    <mat-form-field class="w-100 h-100" appearance="outline">
+        <mat-label *ngIf="!update">Create Label</mat-label>
+        <mat-label *ngIf="update">Update Label</mat-label>
+        <input matInput [(ngModel)]="label" name="new_label" (keyup)="checkLabel($event.target.value)">
+        <mat-hint *ngIf="labelError != ''" style="color: red;">{{labelError}}</mat-hint>
+    </mat-form-field>
+    <br/>
+    <button *ngIf="!update" mat-button (click)="createLabel()"  [disabled]="labelError != ''" class="button">
+    <mat-icon>add</mat-icon>Create Label</button>
+    <button *ngIf="update" mat-button (click)="updateLabel()"  [disabled]="labelError != ''" class="button">
+        Update Label</button>
+
+</div>

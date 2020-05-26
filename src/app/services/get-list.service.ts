@@ -57,7 +57,7 @@ export class GetListService {
   }
 
   getLabelList(userId): Observable<any> {
-    return this.getData(userId, 2);
+    return this.getData(userId, 0);
   }
 
   getStatusList(userId): Observable<any> {
@@ -88,5 +88,14 @@ export class GetListService {
 
   sendData(data){
     this.dataSubject.next(data);
+  }
+
+
+  addLabel(userId, label): Observable<any>{
+    return this._http.post(environment.API_LOCAL+'api/task/addNew', {opt: 1, userId: userId, label: label})
+    .pipe(
+      catchError(error => {
+        return this._error.processError(error);
+      }));
   }
 }

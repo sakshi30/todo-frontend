@@ -17,10 +17,6 @@
     <mat-form-field class="w-100 h-100" appearance="outline">
       <mat-label>Search Label</mat-label>
       <input matInput placeholder="Search Label" (keyup)="_filterLabels($event)">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let label of filteredLabel | async">
-        </mat-option>
-      </mat-autocomplete>
     </mat-form-field>
     <br/>
     
@@ -29,7 +25,25 @@
   <table mat-table [dataSource]='_dataSource' matSort multiTemplateDataRows>
     <ng-container matColumnDef='label'>
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Labels</th>
-      <td mat-cell *matCellDef="let element" [routerLink]="['/labelDet', element ]">{{element}}</td>
+      <td mat-cell *matCellDef="let element" >{{element.label}}</td>
+    </ng-container>
+    <ng-container matColumnDef='number'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Total no Of Tasks</th>
+      <td mat-cell *matCellDef="let element" >{{element.task_number}}</td>
+    </ng-container>
+    <ng-container matColumnDef='archieved'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">No Of Archieved Tasks</th>
+      <td mat-cell *matCellDef="let element" >{{element.archieved_task}}</td>
+    </ng-container>
+    <ng-container matColumnDef='action'>
+      <th mat-header-cell *matHeaderCellDef class="dark_bg">Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="option" [routerLink]="['/labelDet', element.label ]" style="cursor: pointer;"><mat-icon>visibility</mat-icon></span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="option" (click)="editLabel(element)" style="cursor: pointer;"><mat-icon>edit</mat-icon></span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="option" (click)="deleteLabel(element)" style="cursor: pointer;"><mat-icon>delete</mat-icon></span>
+      </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="_cols; sticky: true;"></tr>
     <tr mat-row *matRowDef="let row; columns: _cols"></tr>

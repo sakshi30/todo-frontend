@@ -7,6 +7,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddLabelComponent } from '../add-label/add-label.component';
 
 @Component({
   selector: 'app-label',
@@ -16,7 +18,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 export class LabelComponent implements OnInit {
 
   private _labels: any[] = [];
-  private _cols: string[] = ['label'];
+  private _cols: string[] = ['label', 'number', 'archieved', 'action'];
   private _dataSource: any;
   public labelCtrl = new FormControl();
   public filteredLabel: Observable<any>;
@@ -26,7 +28,8 @@ export class LabelComponent implements OnInit {
 
   constructor(
     private _list: GetListService,
-    private _auth: AuthorizationService) { 
+    private _auth: AuthorizationService,
+    private _dialog: MatDialog) { 
       this.filteredLabel = this.labelCtrl.valueChanges.pipe(debounceTime(500), startWith(''), map(label => this._filterLabels(label)))
       this._filterLabels('')
   }
@@ -34,13 +37,33 @@ export class LabelComponent implements OnInit {
   _filterLabels(event){
     //this.userId = this._auth.sendUserDetails()._id;
     this.userId = '5ec3c5187ea72e2c5cdedd80';
-    this._list.getLabelList(this.userId).subscribe(data => {        
+    this._list.getLabelList(this.userId).subscribe(data => {    
       if(event.target){
+        this._labels = [];
         var label = event.target.value;   
-        this._labels = JSON.parse(data)['label'].filter(s => s.includes(label))
+        var data = JSON.parse(data)['label'].filter(s => s.includes(label))
+        data.forEach(element => {
+          this._labels.push({label: element})
+        })
       }
       else{
-        this._labels = JSON.parse(data)['label'];
+        console.log(JSON.parse(data)['task'], JSON.parse(data)['label'])
+        JSON.parse(data)['label'].forEach(element => {
+          var task_number = 0;
+          var archieved_task = 0;
+          JSON.parse(data)['task'].forEach(task => {
+            task['label'].forEach(label => {
+              if(label == element){
+                task_number += 1
+                if(task.archieved){
+                  archieved_task += 1
+                }
+              }
+            })
+            
+          })
+          this._labels.push({label: element, task_number: task_number, archieved_task: archieved_task})
+        });
       }
       this._dataSource = new MatTableDataSource(this._labels);
       this._dataSource.sort = this.sort;
@@ -52,7 +75,18 @@ export class LabelComponent implements OnInit {
   }
 
   addLabel() {
-    alert('not yet implemented');
+    var ref = this._dialog.open(AddLabelComponent, {width: '500px', data: {label: this._labels, update: ''}});
+    ref.afterClosed().subscribe(result => {
+      this._labels = [];
+      this._filterLabels('')
+    })
   }
 
+  editLabel(element){
+    var ref = this._dialog.open(AddLabelComponent, {width: '500px', data: {label: this._labels, update: element}});
+    ref.afterClosed().subscribe(result => {
+      this._labels = [];
+      this._filterLabels('')
+    })
+  }
 }
