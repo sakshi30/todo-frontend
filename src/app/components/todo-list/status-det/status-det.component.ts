@@ -17,7 +17,7 @@ export class StatusDetComponent implements OnInit {
   private _status: string = 's'
 
   private _curr: any;
-  private _cols: string[] = ['date', 'to-do', 'label', 'status'];
+  private _cols: string[] = ['c_date', 'to-do', 'label', 'status', 'd_date', 'action'];
   private _dataSource: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;

@@ -52,6 +52,7 @@ export class GetListService {
   getData(userId, opt) {
     let url: string = environment.API_LOCAL+'api/task/'+userId+'/'+opt;
     return this._http.get(url).pipe(map(res => { 
+      console.log(opt, res);
       return JSON.stringify(res);
     }));
   }
@@ -61,7 +62,7 @@ export class GetListService {
   }
 
   getStatusList(userId): Observable<any> {
-    return this.getData(userId, 3);
+    return this.getData(userId, 0);
   }
 
   /* tasks by attributes */

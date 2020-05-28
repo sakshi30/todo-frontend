@@ -1,3 +1,11 @@
+$primary-color: #57b846;
+
+.dark_bg{
+  background-color: $primary-color;
+  color: white;
+  font-size: 16px;
+}
+
 table {
   width: 100%;
 }
@@ -15,7 +23,7 @@ mat-header-row {
 }
 
 tr:hover {
-    background: #efefef;
+  background: #efefef;
 }
 
 .header-right {

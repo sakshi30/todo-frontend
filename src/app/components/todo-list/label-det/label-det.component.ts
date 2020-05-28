@@ -17,7 +17,7 @@ export class LabelDetComponent implements OnInit {
   private _label: string = 'label 2'
 
   private _curr: any;
-  private _cols: string[] = ['date', 'to-do', 'label', 'status'];
+  private _cols: string[] = ['c_date', 'to-do', 'label', 'status', 'd_date', 'action'];
   private _dataSource: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;

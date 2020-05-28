@@ -29,6 +29,8 @@ front-end for todolist
   - sending due date with 'add task'
   - add new label
   - add new status
+  - displaying due date in 'upcoming tasks list', 'archieved tasks list', 'label details list', 'status detils list'
+  - dividing non-archieved tasks into 'upcoming' or 'completed' based on 'due date'
   - edit: new page, particular item
     - edit task option in 'upcoming tasks list', 'archieved tasks list', 'label details list', 'status detils list'
   - edit: same page, particular item
