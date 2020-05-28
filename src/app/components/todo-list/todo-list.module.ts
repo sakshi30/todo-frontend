@@ -27,6 +27,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddLabelComponent } from './add-label/add-label.component';
+import { AddStatusComponent } from './add-status/add-status.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AddLabelComponent } from './add-label/add-label.component';
     LabelDetComponent,
     StatusDetComponent,
     CompletedComponent,
-    AddLabelComponent
+    AddLabelComponent,
+    AddStatusComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,7 @@ import { AddLabelComponent } from './add-label/add-label.component';
     MatDialogModule
   ],
   providers: [MatDatepickerModule],
-  entryComponents: [AddLabelComponent]
+  entryComponents: [AddLabelComponent, AddStatusComponent]
 })
 export class TodoListModule { 
   static forRoot() {

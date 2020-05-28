@@ -41,7 +41,15 @@ export class GetListService {
   }
 
   updateTask(data): Observable<any>{
-    return this._http.get(environment.API_LOCAL+'api/task/update', data)
+    return this._http.post(environment.API_LOCAL+'api/task/update', data)
+    .pipe(
+      catchError(error => {
+        return this._error.processError(error);
+      }));
+  }
+
+  updateLabelAndStatus(userId, val, tasks, opt): Observable<any>{
+    return this._http.post(environment.API_LOCAL+'api/task/updateLabel', {userId: userId, val: val, tasks: tasks, opt: opt})
     .pipe(
       catchError(error => {
         return this._error.processError(error);
@@ -61,7 +69,7 @@ export class GetListService {
   }
 
   getStatusList(userId): Observable<any> {
-    return this.getData(userId, 3);
+    return this.getData(userId, 0);
   }
 
   /* tasks by attributes */
@@ -92,7 +100,15 @@ export class GetListService {
 
 
   addLabel(userId, label): Observable<any>{
-    return this._http.post(environment.API_LOCAL+'api/task/addNew', {opt: 1, userId: userId, label: label})
+    return this._http.post(environment.API_LOCAL+'api/task/addNew', {opt: 1, userId: userId, val: label})
+    .pipe(
+      catchError(error => {
+        return this._error.processError(error);
+      }));
+  }
+
+  addStatus(userId, label): Observable<any>{
+    return this._http.post(environment.API_LOCAL+'api/task/addNew', {opt: 2, userId: userId, val: label})
     .pipe(
       catchError(error => {
         return this._error.processError(error);
