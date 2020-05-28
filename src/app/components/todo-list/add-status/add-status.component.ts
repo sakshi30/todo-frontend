@@ -23,8 +23,8 @@ export class AddStatusComponent implements OnInit {
   ngOnInit(): void {
     //this.userId = this._auth.sendUserDetails()._id;
     this.userId = '5ec3c5187ea72e2c5cdedd80';
-    this.status = this.data.update
-    if(this.status != ''){
+    this.status = this.data.update.status
+    if(this.data.update != ''){
       this.update = true
     }
     else{

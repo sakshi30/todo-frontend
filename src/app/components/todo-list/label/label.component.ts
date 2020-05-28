@@ -2,10 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetListService } from 'src/app/services/get-list.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLabelComponent } from '../add-label/add-label.component';
@@ -43,9 +39,22 @@ export class LabelComponent implements OnInit {
       if(event.target){
         this._labels = [];
         var label = event.target.value;   
-        var data = JSON.parse(data)['label'].filter(s => s.includes(label))
-        data.forEach(element => {
-          this._labels.push({label: element})
+        var data_label = JSON.parse(data)['label'].filter(s => s.includes(label))
+        data_label.forEach(element => {
+          var task_number = 0;
+          var archieved_task = 0;
+          JSON.parse(data)['task'].forEach(task => {
+            console.log(task)
+            task['label'].forEach(label => {
+              if(label == element){
+                task_number += 1
+                if(task.archieved){
+                  archieved_task += 1
+                }
+              }
+            })
+          })
+          this._labels.push({label: element, task_number: task_number, archieved_task: archieved_task})
         })
       }
       else{

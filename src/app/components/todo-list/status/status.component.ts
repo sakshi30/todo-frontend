@@ -42,13 +42,25 @@ export class StatusComponent implements OnInit {
       if(event.target){
         this._status = [];
         var status = event.target.value;   
-        var data = JSON.parse(data)['status'].filter(s => s.includes(status))
-        data.forEach(element => {
-          this._status.push({status: element})
+        var data_status = JSON.parse(data)['status'].filter(s => s.includes(status))
+        data_status.forEach(element => {
+          var task_number = 0;
+          var archieved_task = 0;
+          JSON.parse(data)['task'].forEach(task => {
+            console.log(task)
+            task['status'].forEach(status => {
+              if(status == element){
+                task_number += 1
+                if(task.archieved){
+                  archieved_task += 1
+                }
+              }
+            })
+          })
+          this._status.push({status: element, task_number: task_number, archieved_task: archieved_task})
         })
       }
       else{
-        console.log(JSON.parse(data)['task'], JSON.parse(data)['status'])
         JSON.parse(data)['status'].forEach(element => {
           var task_number = 0;
           var archieved_task = 0;
@@ -80,7 +92,7 @@ export class StatusComponent implements OnInit {
     })
   }
 
-  editstatus(element){
+  editStatus(element){
     var ref = this._dialog.open(AddStatusComponent, {width: '500px', data: {status: this.all_status, update: element, tasks: this.tasks }});
     ref.afterClosed().subscribe(result => {
       this._status = [];
@@ -88,7 +100,7 @@ export class StatusComponent implements OnInit {
     })
   }
 
-  deletestatus(element){
+  deleteStatus(element){
     this.tasks.forEach(task => {
       if(task.status.includes(element.status)){
         task.status.splice(task.status.indexOf(element.status), 1);
@@ -106,6 +118,7 @@ export class StatusComponent implements OnInit {
       this._filterStatus('')
     })
   }
+  
 
   
 }

@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-label-det',
   templateUrl: './label-det.component.html',
-  styleUrls: ['./label-det.component.css']
+  styleUrls: ['./label-det.component.scss']
 })
 export class LabelDetComponent implements OnInit {
 
@@ -42,9 +42,13 @@ export class LabelDetComponent implements OnInit {
   }
 
   createTask(){
-    var item = {_id: '', value: '', label: [this._label], status: [], date: {}}
+    var item = {value: '', label: [this._label], status: [], dueDate: {}}
     this._list.sendData({data: item, update: false})
     this._router.navigate(['/addTask'])
   }
 
+  editItem(element){
+    this._list.sendData({data: element, update: true});
+    this._router.navigate(['/addTask']);
+  }
 }

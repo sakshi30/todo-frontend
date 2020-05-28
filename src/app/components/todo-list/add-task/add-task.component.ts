@@ -19,8 +19,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
  
-  public created_task: Task = {value: '', label: [], status: [], date: {}, _id: ''}
-  public tasks: ToDo =  {userId: '', task: this.created_task, label: [], status: [], _id: '' };
+  public created_task: Task = {value: '', label: [], status: [], dueDate: {}}
+  public tasks: ToDo =  {userId: '', task: this.created_task, label: [], status: []};
   visible = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   labelCtrl = new FormControl();
@@ -50,7 +50,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       }
       else{
         this.updated_task = result.update;
-        this.created_task = {_id: '', value: '', label: [], status: [], date: {}};
+        this.created_task = {value: '', label: [], status: [], dueDate: {}};
       }
     })
     
@@ -156,7 +156,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
   createTask(){
     var object = {userId: '', val: {}}
-    this.tasks._id = '';
     object.userId = this.tasks.userId;
     object.val = {task: this.created_task, label: this.all_labels, status: this.all_status}
     this._todo.storeData(object).subscribe(result => {
@@ -173,13 +172,13 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.created_task.value = '';
     this.created_task.label = [];
     this.created_task.status = [];
-    this.created_task.date = {};
+    this.created_task.dueDate = {};
   }
 
   updateTask(){
     var object = {userid: '', val: {}, taskId: ''}
-    object.taskId = this.created_task._id;
-    object.val = {value: this.created_task.value, label: this.created_task.label, status: this.created_task.status};
+    object.taskId = Object(this.created_task)._id;
+    object.val = {value: this.created_task.value, label: this.created_task.label, status: this.created_task.status, dueDate: this.created_task.dueDate};
     object.userid = this.tasks.userId;
     this._todo.updateTask(object).subscribe(result => {
       this._toast.success(result.status);

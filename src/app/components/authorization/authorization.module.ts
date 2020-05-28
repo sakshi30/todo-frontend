@@ -11,13 +11,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignupComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AccountComponent
   ],
   imports: [
     CommonModule,

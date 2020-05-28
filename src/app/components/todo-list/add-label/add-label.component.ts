@@ -24,7 +24,7 @@ export class AddLabelComponent implements OnInit {
   ngOnInit(): void {
     //this.userId = this._auth.sendUserDetails()._id;
     this.userId = '5ec3c5187ea72e2c5cdedd80';
-    this.label = this.data.update
+    this.label = this.data.update.label
     if(this.label != ''){
       this.update = true
     }

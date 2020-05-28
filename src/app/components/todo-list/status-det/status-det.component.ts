@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-status-det',
   templateUrl: './status-det.component.html',
-  styleUrls: ['./status-det.component.css']
+  styleUrls: ['./status-det.component.scss']
 })
 export class StatusDetComponent implements OnInit {
 
@@ -22,7 +22,10 @@ export class StatusDetComponent implements OnInit {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor( private _list: GetListService, private _activatedRoute: ActivatedRoute ) {
+  constructor( 
+    private _list: GetListService, 
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router ) {
     this._status = this._activatedRoute.snapshot.paramMap.get('status');
 
     this._list.tasksByStatus(this._userId, this._status).subscribe(data => { 
@@ -36,6 +39,17 @@ export class StatusDetComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  createTask(){
+    var item = {value: '', label: [], status: [this._status], dueDate: {}}
+    this._list.sendData({data: item, update: false})
+    this._router.navigate(['/addTask'])
+  }
+
+  editItem(element){
+    this._list.sendData({data: element, update: true});
+    this._router.navigate(['/addTask']);
   }
 
 }

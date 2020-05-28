@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AccountComponent } from './account/account.component';
+import { LoginGuard } from 'src/app/shared/login.guard';
 
 const routes: Routes = [{
     path: 'login',
@@ -20,6 +22,11 @@ const routes: Routes = [{
 {
     path: 'changepassword',
     component: ChangePasswordComponent
+},
+{
+    path: 'account',
+    component: AccountComponent,
+    canActivate: [LoginGuard]
 },
 {
     path: '',

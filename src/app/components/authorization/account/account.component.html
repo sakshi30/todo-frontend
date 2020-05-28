@@ -1,0 +1,25 @@
+<div class="container">
+    <br/><br/>
+    <h2><b>My Account</b></h2>
+    <br/><br/>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="user.username" name="username" />
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="user.password" name="password" />
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="user.email" name="email" />
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Security Question</mat-label>
+        <input matInput [(ngModel)]="user.security_question" name="security_question" />
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Security Answer</mat-label>
+        <input matInput [(ngModel)]="user.security_answer" name="security_answer" />
+    </mat-form-field>
+</div>

@@ -53,7 +53,7 @@
             </mat-form-field>
             <mat-form-field color="primary" class="w-100" appearance="outline">
                 <mat-label>Due date</mat-label>
-                <input matInput [matDatepicker]="picker1" [(ngModel)]="created_task.date" name="date">
+                <input matInput [matDatepicker]="picker1" [(ngModel)]="created_task.dueDate" name="date">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
