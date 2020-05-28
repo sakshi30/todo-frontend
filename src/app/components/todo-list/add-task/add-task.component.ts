@@ -1,5 +1,5 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, ElementRef, ViewChild, OnInit, OnDestroy} from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit, OnDestroy, Inject} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -10,6 +10,7 @@ import { ToDo, Task } from 'src/app/models/todo';
 import { GetListService } from 'src/app/services/get-list.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-task',
@@ -41,14 +42,14 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     private _todo: GetListService,
     private _toast: ToastrService,
     private _router: Router) {
-    this.tasks = this._auth.sendTaskDetails()[0]
+    this.tasks = this._auth.sendTaskDetails()[0]    
     this.data_subscription =  this._todo.dataObservable.subscribe(result => {
-      if(result){
-        this.updated_task = true;
-        this.created_task = result
+      if(result.data){
+        this.updated_task = result.update;
+        this.created_task = result.data
       }
       else{
-        this.updated_task = false;
+        this.updated_task = result.update;
         this.created_task = {_id: '', value: '', label: [], status: [], date: {}};
       }
     })

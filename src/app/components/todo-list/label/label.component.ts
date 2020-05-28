@@ -9,6 +9,7 @@ import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLabelComponent } from '../add-label/add-label.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-label',
@@ -20,24 +21,25 @@ export class LabelComponent implements OnInit {
   private _labels: any[] = [];
   private _cols: string[] = ['label', 'number', 'archieved', 'action'];
   private _dataSource: any;
-  public labelCtrl = new FormControl();
-  public filteredLabel: Observable<any>;
   public userId: any;
-
+  public tasks: any[] = [];
+  public all_labels: any[] = [];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
     private _list: GetListService,
     private _auth: AuthorizationService,
-    private _dialog: MatDialog) { 
-      this.filteredLabel = this.labelCtrl.valueChanges.pipe(debounceTime(500), startWith(''), map(label => this._filterLabels(label)))
+    private _dialog: MatDialog, 
+    private _toast: ToastrService) { 
       this._filterLabels('')
   }
 
   _filterLabels(event){
     //this.userId = this._auth.sendUserDetails()._id;
     this.userId = '5ec3c5187ea72e2c5cdedd80';
-    this._list.getLabelList(this.userId).subscribe(data => {    
+    this._list.getLabelList(this.userId).subscribe(data => {   
+      this.tasks = JSON.parse(data)['task']; 
+      this.all_labels = JSON.parse(data)['label']
       if(event.target){
         this._labels = [];
         var label = event.target.value;   
@@ -83,8 +85,27 @@ export class LabelComponent implements OnInit {
   }
 
   editLabel(element){
-    var ref = this._dialog.open(AddLabelComponent, {width: '500px', data: {label: this._labels, update: element}});
+    var ref = this._dialog.open(AddLabelComponent, {width: '500px', data: {label: this.all_labels, update: element, tasks: this.tasks }});
     ref.afterClosed().subscribe(result => {
+      this._labels = [];
+      this._filterLabels('')
+    })
+  }
+
+  deleteLabel(element){
+    this.tasks.forEach(task => {
+      if(task.label.includes(element.label)){
+        task.label.splice(task.label.indexOf(element.label), 1);
+      }
+    });
+    this.all_labels.splice(this.all_labels.indexOf(element.label), 1)
+    this._list.updateLabelAndStatus(this.userId, this.all_labels, this.tasks, 1).subscribe(result => {
+      this._labels = [];
+      this._filterLabels('')
+      this._toast.success("Label Deleted successfully");
+      
+    }, (error) => {
+      this._toast.error("Unable to delete label")
       this._labels = [];
       this._filterLabels('')
     })

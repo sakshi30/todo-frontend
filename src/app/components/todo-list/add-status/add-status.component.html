@@ -1,1 +1,16 @@
-<p>add-status works!</p>
+<div class="container">
+    <br/>
+  <h2 *ngIf="!update"><b>Create Status</b></h2>
+  <h2 *ngIf="update"><b>Update Status</b></h2>
+    <mat-form-field class="w-100 h-100" appearance="outline">
+        <mat-label *ngIf="!update">Create Status</mat-label>
+        <mat-label *ngIf="update">Update Status</mat-label>
+        <input matInput [(ngModel)]="status" name="new_status" (keyup)="checkStatus($event.target.value)">
+        <mat-hint *ngIf="statusError != ''" style="color: red;">{{statusError}}</mat-hint>
+    </mat-form-field>
+    <br/>
+    <button *ngIf="!update" mat-button (click)="createStatus()"  [disabled]="statusError != ''" class="button">
+    <mat-icon>add</mat-icon>Create Status</button>
+    <button *ngIf="update" mat-button (click)="updateStatus()"  [disabled]="statusError != ''" class="button">
+        Update Status</button>
+</div>

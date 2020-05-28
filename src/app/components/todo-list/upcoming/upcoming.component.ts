@@ -43,13 +43,13 @@ export class UpcomingComponent implements OnInit {
   }
 
   createTask(){
-    this._list.sendData(null);
+    this._list.sendData({data: null, update: false});
     this._router.navigate(['/addTask'])
   }
 
 
   editItem(item){
-    this._list.sendData(item);
+    this._list.sendData({data: item, update: true});
     this._router.navigate(['/addTask']);
   }
 

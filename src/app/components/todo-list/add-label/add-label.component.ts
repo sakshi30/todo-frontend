@@ -24,7 +24,7 @@ export class AddLabelComponent implements OnInit {
   ngOnInit(): void {
     //this.userId = this._auth.sendUserDetails()._id;
     this.userId = '5ec3c5187ea72e2c5cdedd80';
-    this.label = this.data.update.label
+    this.label = this.data.update
     if(this.label != ''){
       this.update = true
     }
@@ -47,14 +47,30 @@ export class AddLabelComponent implements OnInit {
 
 
   checkLabel(label){
-    var value = this.data.label.filter(s => s.label.includes(label))
+    var value = this.data.label.filter(s => s.label == label)
     if(value.length == 1){
       this.labelError = 'Label already exists'
+    }
+    else{
+      this.labelError = ''
     }
   }
 
   updateLabel(){
-    console.log(this.data.update, this.label)
+    this.data.tasks.forEach(task => {
+      if(task.label.includes(this.data.update.label)){
+        task.label.splice(task.label.indexOf(this.data.update.label), 1);
+        task.label.unshift(this.label)
+      }
+    });
+    this.data.label.splice(this.data.label.indexOf(this.data.update.label), 1)
+    this.data.label.unshift(this.label)
+    this._list.updateLabelAndStatus(this.userId, this.data.label, this.data.tasks, 1).subscribe(result => {
+      this._matRef.close();
+      this._toast.success(result.status)
+    }, (error) => {
+      this._toast.error(error)
+    })
   }
 
 }

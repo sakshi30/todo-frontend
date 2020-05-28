@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetListService } from 'src/app/services/get-list.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-label-det',
@@ -22,7 +22,10 @@ export class LabelDetComponent implements OnInit {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor( private _list: GetListService, private _activatedRoute: ActivatedRoute ) {
+  constructor( 
+    private _list: GetListService, 
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router ) {
     this._label = this._activatedRoute.snapshot.paramMap.get('label');
 
     this._list.tasksByLabel(this._userId, this._label).subscribe(data => { 
@@ -36,6 +39,12 @@ export class LabelDetComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  createTask(){
+    var item = {_id: '', value: '', label: [this._label], status: [], date: {}}
+    this._list.sendData({data: item, update: false})
+    this._router.navigate(['/addTask'])
   }
 
 }
