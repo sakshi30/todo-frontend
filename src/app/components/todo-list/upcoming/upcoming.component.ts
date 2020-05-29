@@ -14,7 +14,7 @@ export class UpcomingComponent implements OnInit {
   private _todo: any[] = [];
 
   private _curr: any;
-  private _cols: string[] = ['c_date', 'to-do', 'label', 'status', 'd_date', 'action'];
+  private _cols: string[] = ['date', 'value', 'label', 'status', 'dueDate', 'action'];
   private _dataSource: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -32,15 +32,12 @@ export class UpcomingComponent implements OnInit {
       });
       this._dataSource = new MatTableDataSource(this._todo);
       this._dataSource.sort = this.sort;
-      console.log('final data ->', this._todo, this._dataSource);
     });
     
   }
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-    // setTimeout(() => { console.log(this._todo) }, 1000);
-  }
+  ngAfterViewInit(): void {}
 
   createTask(){
     this._list.sendData({data: null, update: false});

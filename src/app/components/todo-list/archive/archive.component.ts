@@ -14,7 +14,7 @@ export class ArchiveComponent implements OnInit {
   private _todo: any[] = [];
 
   private _curr: any;
-  private _cols: string[] = ['c_date', 'to-do', 'label', 'status', 'd_date', 'action'];
+  private _cols: string[] = ['date', 'value', 'label', 'status', 'dueDate', 'action'];
   private _dataSource: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;

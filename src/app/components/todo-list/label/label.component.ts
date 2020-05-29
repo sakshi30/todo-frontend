@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LabelComponent implements OnInit {
 
   private _labels: any[] = [];
-  private _cols: string[] = ['label', 'number', 'archieved', 'action'];
+  private _cols: string[] = ['label', 'task_number', 'archieved_task', 'action'];
   private _dataSource: any;
   public userId: any;
   public tasks: any[] = [];
@@ -44,7 +44,6 @@ export class LabelComponent implements OnInit {
           var task_number = 0;
           var archieved_task = 0;
           JSON.parse(data)['task'].forEach(task => {
-            console.log(task)
             task['label'].forEach(label => {
               if(label == element){
                 task_number += 1
@@ -58,7 +57,6 @@ export class LabelComponent implements OnInit {
         })
       }
       else{
-        console.log(JSON.parse(data)['task'], JSON.parse(data)['label'])
         JSON.parse(data)['label'].forEach(element => {
           var task_number = 0;
           var archieved_task = 0;

@@ -60,7 +60,6 @@ export class GetListService {
   getData(userId, opt) {
     let url: string = environment.API_LOCAL+'api/task/'+userId+'/'+opt;
     return this._http.get(url).pipe(map(res => { 
-      console.log(opt, res);
       return JSON.stringify(res);
     }));
   }

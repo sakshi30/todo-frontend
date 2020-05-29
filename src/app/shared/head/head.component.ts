@@ -48,5 +48,15 @@ export class HeadComponent implements OnInit {
     this._router.navigate([page])
   }
 
+  menuBtnClicked(btn) {
+    let activeBtn = document.getElementsByClassName('active');
+    for(let i=0; i<activeBtn.length; i++) {
+      activeBtn.item(i).classList.remove('active');
+    }
+    let btnClicked = document.getElementById('menu-'+btn);
+    btnClicked.classList.add('active');
+    this.goToPage(btn);
+  }
+
 
 }

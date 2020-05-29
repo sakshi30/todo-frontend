@@ -13,17 +13,35 @@
       
     <div class="menu" style="background: #FFFFFF 0% 0% no-repeat padding-box;box-shadow: 0px 3px 8px #3C775A21;opacity: 1;">
         <div class="p-3 position-absolute" style="font-size: 16px; padding-left: 40px;">
-            <button mat-button (click)="goToPage('/upcoming')"><mat-icon aria-hidden="false">arrow_upward</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;Upcoming Tasks</button>
+            <button mat-button (click)="menuBtnClicked('upcoming')" id='menu-upcoming' class='menu-btn active'>
+              <mat-icon aria-hidden="false">arrow_upward</mat-icon> 
+              &nbsp;&nbsp;&nbsp;&nbsp;Upcoming Tasks
+            </button>
             <br/><br/>
-            <button mat-button (click)="goToPage('/completed')"><mat-icon aria-hidden="false">check_circle_outline</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;Completed Tasks</button>
+            <button mat-button (click)="menuBtnClicked('completed')" id='menu-completed' class='menu-btn'>
+              <mat-icon aria-hidden="false">check_circle_outline</mat-icon>
+              &nbsp;&nbsp;&nbsp;&nbsp;Completed Tasks
+            </button>
             <br/><br/>
-            <button mat-button (click)="goToPage('/archive')"><mat-icon aria-hidden="false">archive</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;Archieved Tasks</button>
+            <button mat-button (click)="menuBtnClicked('archive')" id='menu-archive' class='menu-btn'>
+              <mat-icon aria-hidden="false">archive</mat-icon>
+              &nbsp;&nbsp;&nbsp;&nbsp;Archieved Tasks
+            </button>
             <br/><br/>
-            <button mat-button (click)="goToPage('/label')"><mat-icon aria-hidden="false">label</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;Labels</button>
+            <button mat-button (click)="menuBtnClicked('label')" id='menu-label' class='menu-btn'>
+              <mat-icon aria-hidden="false">label</mat-icon>
+              &nbsp;&nbsp;&nbsp;&nbsp;Label
+            </button>
             <br/><br/>
-            <button mat-button (click)="goToPage('/status')"><mat-icon aria-hidden="false">storage</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;Status</button>
+            <button mat-button (click)="menuBtnClicked('status')" id='menu-status' class='menu-btn'>
+              <mat-icon aria-hidden="false">storage</mat-icon>
+              &nbsp;&nbsp;&nbsp;&nbsp;Status
+            </button>
             <br/><br/>
-            <button mat-button (click)="goToPage('/account')"><mat-icon aria-hidden="false">account_circle</mat-icon> &nbsp;&nbsp;&nbsp;&nbsp;My Account</button>
+            <button mat-button (click)="menuBtnClicked('account')" id='menu-account' class='menu-btn'>
+              <mat-icon aria-hidden="false">account_circle</mat-icon>
+              &nbsp;&nbsp;&nbsp;&nbsp;My Account
+            </button>
         </div>
     </div>
 </div>

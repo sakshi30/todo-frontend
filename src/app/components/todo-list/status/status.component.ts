@@ -16,7 +16,7 @@ import { AddStatusComponent } from '../add-status/add-status.component';
 export class StatusComponent implements OnInit {
 
   private _status: any[] = [];
-  private _cols: string[] = ['status', 'number', 'archieved', 'action'];
+  private _cols: string[] = ['status', 'task_number', 'archieved_task', 'action'];
   private _dataSource: any;
   public userId: any;
   public tasks: any[] = [];
@@ -47,7 +47,6 @@ export class StatusComponent implements OnInit {
           var task_number = 0;
           var archieved_task = 0;
           JSON.parse(data)['task'].forEach(task => {
-            console.log(task)
             task['status'].forEach(status => {
               if(status == element){
                 task_number += 1
