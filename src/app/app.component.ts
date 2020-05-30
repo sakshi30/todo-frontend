@@ -10,7 +10,8 @@ export class AppComponent {
   title = 'To Do List';
 
   public isLoggedIn: boolean = false;
-  constructor(public authService: AuthorizationService){
+  constructor(public authService: AuthorizationService) {
+    //this.authService.loadUserCredentials();
     this.authService.getUserDetails
       .subscribe(response => {
         //if the user doesnot have an error

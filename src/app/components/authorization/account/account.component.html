@@ -1,25 +1,75 @@
 <div class="container">
-    <br/><br/>
+    <br /><br />
     <h2><b>My Account</b></h2>
-    <br/><br/>
-    <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Username</mat-label>
-        <input matInput [(ngModel)]="user.username" name="username" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" [(ngModel)]="user.password" name="password" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="user.email" name="email" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Security Question</mat-label>
-        <input matInput [(ngModel)]="user.security_question" name="security_question" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Security Answer</mat-label>
-        <input matInput [(ngModel)]="user.security_answer" name="security_answer" />
-    </mat-form-field>
+    <br /><br />
+    <div fxLayout="row" fxLayoutGap="10%" fxLayoutWrap>
+        <button mat-button (click)="viewDetails(1)" class="button">
+            <mat-icon>supervised_user_circle</mat-icon> Login & Security
+        </button>
+        <button mat-button (click)="viewDetails(2)" class="button">
+            <mat-icon>security</mat-icon> Change Password
+        </button>
+    </div>
+    <br /><br />
+    <div *ngIf="userDetails" class="container">
+        <mat-form-field class="width" appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput [(ngModel)]="user.username" name="username" />
+        </mat-form-field>
+        <mat-form-field class="width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="user.email" name="email" readonly />
+        </mat-form-field>
+        <mat-form-field class="width" appearance="outline">
+            <mat-label>Security Question</mat-label>
+            <input matInput [(ngModel)]="user.security_question" name="security_question" />
+        </mat-form-field>
+        <mat-form-field class="width" appearance="outline">
+            <mat-label>Security Answer</mat-label>
+            <input matInput [(ngModel)]="user.security_answer" name="security_answer" />
+        </mat-form-field>
+        <br /><br />
+        <button mat-button (click)="saveUser()" class="button_save">
+            Save User
+        </button>
+        <br /><br />
+    </div>
+    <div *ngIf="changePassword" class="border_box">
+        <form #loginForm="ngForm">
+            <mat-form-field class="width" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput #x type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                    placeholder="Password" [(ngModel)]="password1" #passwordField="ngModel" name="password" required>
+                <button mat-button matSuffix (click)="x.type=x.type=='password'?'text':'password'">
+                    <span *ngIf="x.type == 'password'">Show</span>
+                    <span *ngIf="x.type == 'text'">Hide</span>
+                </button>
+                <mat-error *ngIf="passwordField.errors?.required && passwordField.touched">
+                    Password is required</mat-error>
+                <mat-error *ngIf="passwordField.errors?.pattern">
+                    Password must contain a small letter, a capital letter, a number and a special character</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="width" appearance="outline">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput #y type="password" pattern="{{ passwordField.value }}" placeholder="Confirm Password"
+                    [(ngModel)]="password2" #confirmPasswordField="ngModel" name="password2" required>
+                <button mat-button matSuffix (click)="y.type=y.type=='password'?'text':'password'">
+                    <span *ngIf="y.type == 'password'">Show</span>
+                    <span *ngIf="y.type == 'text'">Hide</span>
+                </button>
+                <mat-error *ngIf="confirmPasswordField.errors?.required && confirmPasswordField.touched">
+                    Please confirm your password</mat-error>
+                <br />
+                <mat-error
+                    *ngIf="confirmPasswordField.invalid && confirmPasswordField.touched &&  !confirmPasswordField.errors?.required">
+                    Passwords donot match</mat-error>
+            </mat-form-field>
+            <br /><br />
+            <button mat-button (click)="savePassword()" class="button_save" [disabled]="loginForm.form.invalid">
+                Change Password
+            </button>
+            <br /><br />
+        </form>
+    </div>
 </div>

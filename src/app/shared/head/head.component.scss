@@ -1,3 +1,5 @@
+$primary-color: #57b846;
+
 .menu {
     top: 60px;
     bottom: 0;
@@ -37,6 +39,6 @@ button:hover{
 }
 
 .active {
-  background-color: #009D4F;
+  background-color: $primary-color;
   color: white;
 }

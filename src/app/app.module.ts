@@ -12,6 +12,7 @@ import { TodoListModule } from './components/todo-list/todo-list.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     MatButtonModule,
     FlexLayoutModule,
+    MatMenuModule,
     ToastrModule.forRoot(),
     AuthorizationModule.forRoot(),
     TodoListModule.forRoot()

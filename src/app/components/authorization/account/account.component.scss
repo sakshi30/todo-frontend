@@ -1,0 +1,41 @@
+$primary-color: #57b846;
+.button{
+    border: 1px solid #57b846;
+    border-radius: 4px;
+    opacity: 1;
+    text-align: left;
+    letter-spacing: 0.16px;
+    color: #57b846;
+    font-weight: 16px;
+}
+
+.width{
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 80%;
+}
+
+.button_save{
+    background-color: $primary-color;
+    color: white;
+    border-radius: 6px;
+    width: 273px;
+    height: 50px;
+    position: absolute;
+    right: 10%;
+    opacity: 1;
+}
+
+.label{
+    color: #159D4F;
+    font-size: 20px;
+}
+
+.data{
+    font-size: 20px;
+}
+
+.button_save:disabled{
+    background-color: #84858B;
+    color: white;
+}

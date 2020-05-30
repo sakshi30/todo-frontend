@@ -11,11 +11,12 @@ import { HandleErrorService } from './handle-error.service';
 })
 export class AuthorizationService {
 
-  public isAuthenticated: Boolean = false;
+  public isAuthenticated: boolean = false;
   private loggedInUser = new Subject<User>();
   public getUserDetails = this.loggedInUser.asObservable();
   public currentURL: string = '';
   public navbarOpen: boolean = false;
+  public authToken: string = '';
 
   constructor(private _http: HttpClient,
     private _error: HandleErrorService) { }
@@ -64,11 +65,56 @@ export class AuthorizationService {
 
   //store user details and set flag 
   storeUserCredentials(user) {
+    console.log(user)
     localStorage.setItem('user', JSON.stringify(user.value));
     localStorage.setItem('user_tasks', JSON.stringify(user.tasks));
+    this.useCredentials(user);
+  }
+
+  useCredentials(user){
+    this.authToken = user.token;
     this.sendDetails(user.value);
     this.isAuthenticated = true;
   }
+
+  loadUserCredentials() {
+    var credentials: User = JSON.parse(localStorage.getItem('user'));
+    if (credentials && credentials.username != undefined) {
+      this.useCredentials(credentials);
+      if (this.authToken){
+        console.log(this.authToken)
+        this.checkJWTtoken();
+      }
+    }
+  }
+
+  checkJWTtoken() {
+    this._http.get<any>(environment.API_LOCAL + 'api/user/checkJWTtoken')
+    .subscribe(res => {
+      console.log("JWT Token Valid: ", res);
+      this.sendDetails(res.user.username);
+    },
+    err => {
+      console.log("JWT Token invalid: ", err);
+      this.destroyUserCredentials();
+    })
+  }
+
+  destroyUserCredentials() {
+    this.authToken = undefined;
+    this.clearUsername();
+    this.isAuthenticated = false;
+    localStorage.removeItem('user');
+  }
+
+  logOut() {
+    this.destroyUserCredentials();
+  }
+
+  clearUsername() {
+    this.loggedInUser.next(undefined);
+  }
+
 
   //send user details from localStorage
   sendTaskDetails() {
@@ -88,7 +134,7 @@ export class AuthorizationService {
    * @param user used to check if the user who has forgot his password 
    * to change the password
    */
-  changePassword(user: User): Observable<any>{
+  changePassword(user): Observable<any>{
     return this._http.post(environment.API_LOCAL+'api/user/changepassword', user)
     .pipe(
       catchError(error => {
@@ -100,5 +146,13 @@ export class AuthorizationService {
   //check if the user is logged in
   isLoggedIn() {
     return this.isAuthenticated;
+  }
+
+  saveUser(user: User): Observable<any>{
+    return this._http.post(environment.API_LOCAL+'api/user/saveUser', user)
+    .pipe(
+      catchError(error => {
+        return this._error.processError(error);
+      }));
   }
 }
