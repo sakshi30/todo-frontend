@@ -28,6 +28,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddLabelComponent } from './add-label/add-label.component';
 import { AddStatusComponent } from './add-status/add-status.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectTrigger, MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { AddStatusComponent } from './add-status/add-status.component';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule,
+    MatSelectModule
   ],
   providers: [MatDatepickerModule],
   entryComponents: [AddLabelComponent, AddStatusComponent]

@@ -3,6 +3,9 @@ import { GetListService } from 'src/app/services/get-list.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-archive',
@@ -16,36 +19,84 @@ export class ArchiveComponent implements OnInit {
   private _curr: any;
   private _cols: string[] = ['date', 'value', 'label', 'status', 'dueDate', 'action'];
   private _dataSource: any;
-
+  public taskId: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private _list: GetListService,
-    private _router: Router) { 
-    let userId = '5ec3c5187ea72e2c5cdedd80';
-    this._curr = new Date();
-    this._list.getTaskList(userId, 1).subscribe(data => { 
-      let tasks = JSON.parse(data);
-      tasks.forEach(ele => {
-        this._todo.push(ele['task']);
-      });
-      this._dataSource = new MatTableDataSource(this._todo);
-      this._dataSource.sort = this.sort;
-    });
-    
+    private _router: Router,
+    private _toast: ToastrService,
+    private _auth: AuthorizationService) {
+    this._filterTasks('');
+
   }
 
   ngOnInit(): void {
   }
 
-  createTask(){
-    this._list.sendData({data: null, update: false});
+  _filterTasks(event) {
+    var yesterday = new Date(new Date().getTime());
+    this._curr = yesterday.setDate(new Date().getDate() - 1);
+    let tasks = this._auth.sendTaskDetails()[0]
+    this.taskId = tasks._id
+    if (event.target) {
+      this._todo = [];
+      var task = event.target.value;
+      var data_label = tasks.task.filter(s => s.value.includes(task))
+      data_label.forEach(ele => {
+        this._todo.push(ele);
+      });
+      this._dataSource = new MatTableDataSource(this._todo);
+      this._dataSource.sort = this.sort;
+      this._dataSource.paginator = this.paginator;
+    }
+    else {
+      tasks['task'].forEach(ele => {
+        if (ele.archieved) this._todo.push(ele);
+      });
+      this._dataSource = new MatTableDataSource(this._todo);
+      this._dataSource.sort = this.sort;
+      this._dataSource.paginator = this.paginator;
+    }
+  }
+
+  createTask() {
+    this._list.sendData({ data: null, update: false });
     this._router.navigate(['/addTask'])
   }
 
 
-  editItem(item){
-    this._list.sendData({data: item, update: true});
+  editItem(item) {
+    this._list.sendData({ data: item, update: true });
     this._router.navigate(['/addTask']);
+  }
+
+  unarchiveItem(element) {
+    element.archieved = false;
+    var object = { val: {}, taskId: '' }
+    object.taskId = element._id;
+    object.val = { archieved: element.archieved };
+    this._list.updateTask(object).subscribe(result => {
+      this._todo = this._todo.filter(element => element.archieved == true)
+      console.log(this._todo);
+      this._dataSource = new MatTableDataSource(this._todo);
+      this._dataSource.sort = this.sort;
+      this._toast.success("Task has been unarchieved")
+    }, (error) => {
+      this._toast.error("Unable to unarchieve this task")
+    })
+  }
+
+
+  deleteItem(element) {
+    this._list.deleteTask(1, this.taskId, element._id).subscribe(result => {
+      this._todo = this._todo.filter(el => el._id != element._id)
+      this._dataSource = new MatTableDataSource(this._todo);
+      this._dataSource.sort = this.sort;
+      this._toast.success("Task deleted sccessfully")
+    }, (error) => {
+      this._toast.error("Unable to delete the task")
+    })
   }
 
 

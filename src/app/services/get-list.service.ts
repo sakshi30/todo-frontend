@@ -114,4 +114,11 @@ export class GetListService {
         return this._error.processError(error);
       }));
   }
+
+  deleteTask(opt, taskId, val): Observable<any>{
+    let url: string = environment.API_LOCAL+'api/task/'+opt+'/'+taskId+'/'+val;
+    return this._http.delete(url).pipe(map(res => {
+      return JSON.stringify(res);
+    }));
+  }
 }

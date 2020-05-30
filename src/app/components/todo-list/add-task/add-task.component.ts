@@ -31,6 +31,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   filteredStatus: Observable<string[]>;
   updated_task = false;
   data_subscription: Subscription;
+  status = new FormControl();
+
   @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
@@ -134,9 +136,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.labelCtrl.setValue(null);
   }
 
-  selectedStatus(event: MatAutocompleteSelectedEvent): void {
-    if(!this.created_task.status.includes(event.option.viewValue))
-    this.created_task.status.push(event.option.viewValue);
+  selectedStatus(stat): void {
+    if(!this.created_task.status.includes(stat))
+    this.created_task.status.push(stat);
     this.statusInput.nativeElement.value = '';
     this.statusCtrl.setValue(null);
   }
@@ -180,6 +182,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     object.taskId = Object(this.created_task)._id;
     object.val = {value: this.created_task.value, label: this.created_task.label, status: this.created_task.status, dueDate: this.created_task.dueDate};
     object.userid = this.tasks.userId;
+    console.log(object)
     this._todo.updateTask(object).subscribe(result => {
       this._toast.success(result.status);
 
