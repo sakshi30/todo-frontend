@@ -30,6 +30,7 @@ import { AddLabelComponent } from './add-label/add-label.component';
 import { AddStatusComponent } from './add-status/add-status.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectTrigger, MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,9 @@ import { MatSelectTrigger, MatSelectModule } from '@angular/material/select';
     MatNativeDateModule,
     MatDialogModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule,
+    MatMenuModule
   ],
   providers: [MatDatepickerModule],
   entryComponents: [AddLabelComponent, AddStatusComponent]

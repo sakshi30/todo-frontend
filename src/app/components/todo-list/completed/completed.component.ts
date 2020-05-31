@@ -17,12 +17,13 @@ export class CompletedComponent implements OnInit {
   private _todo: any[] = [];
 
   private _curr: any;
-  private _cols: string[] = ['date', 'value', 'label', 'status', 'dueDate', 'action'];
+  private _cols: string[] = ['value', 'label', 'status', 'dueDate', 'action'];
+  public all_status = ['Not Started', 'In Progress', 'Completed', 'Cancelled']
   private _dataSource: any;
   public userId: string;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
     private _list: GetListService,
     private _router: Router,
@@ -32,37 +33,41 @@ export class CompletedComponent implements OnInit {
 
   }
 
-  _filterTasks(event){
-    
+  _filterTasks(event) {
+    this.userId = '5ed33094de8023303093c09e';
     var yesterday = new Date(new Date().getTime());
     this._curr = yesterday.setDate(new Date().getDate() - 1);
-    let tasks = this._auth.sendTaskDetails()[0]
-    this.userId = tasks.userId;
-    if (event.target) {
-      this._todo = [];
-      var task = event.target.value;
-      var data_label = tasks.task.filter(s => s.value.includes(task))
-      data_label.forEach(ele => {
-        if (new Date(ele['dueDate']).getTime() < this._curr) {
-          // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
-          this._todo.push(ele);
-        }
-      });
-      this._dataSource = new MatTableDataSource(this._todo);
-      this._dataSource.sort = this.sort;
-      this._dataSource.paginator = this.paginator;
-    }
-    else{
-      tasks['task'].forEach(ele => {
-        if (new Date(ele['dueDate']).getTime() < this._curr) {
-          // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
-          this._todo.push(ele);
-        }
-      });
-      this._dataSource = new MatTableDataSource(this._todo);
-      this._dataSource.sort = this.sort;
-      this._dataSource.paginator = this.paginator;
-    }
+
+    this._list.getUpcomingTask(this.userId).subscribe(data => {
+      let tasks = JSON.parse(data);
+      console.log(tasks);
+      if (event.target) {
+        this._todo = [];
+        var task = event.target.value;
+        var data_label = tasks.filter(s => s.task.value.includes(task))
+        data_label.forEach(ele => {
+          if (ele['task']['status'] == 'Completed') {
+            // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
+            this._todo.push(ele['task']);
+          }
+        });
+        this._dataSource = new MatTableDataSource(this._todo);
+        this._dataSource.sort = this.sort;
+        this._dataSource.paginator = this.paginator;
+      }
+      else {
+        tasks.forEach(ele => {
+          console.log(ele['task'])
+          if (ele['task']['status'] == 'Completed') {
+            // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
+            this._todo.push(ele['task']);
+          }
+        });
+        this._dataSource = new MatTableDataSource(this._todo);
+        this._dataSource.sort = this.sort;
+        this._dataSource.paginator = this.paginator;
+      }
+    });
   }
   ngOnInit(): void { }
 
@@ -72,6 +77,23 @@ export class CompletedComponent implements OnInit {
 
   createTask() {
     this._router.navigate(['/addTask'])
+  }
+
+  changeStatus(element, status) {
+    var object = { val: {}, taskId: '' }
+    object.taskId = element._id;
+    object.val = { status: status };
+    this._list.updateTask(object).subscribe(result => {
+      element.status = status
+      if(status != 'Completed'){
+        this._todo = this._todo.filter((item) => item._id !== element._id);
+        this._dataSource = new MatTableDataSource(this._todo);
+        this._dataSource.sort = this.sort;
+        this._dataSource.paginator = this.paginator;
+      }
+    }, (error) => {
+      this._toast.error("Unable to change the status")
+    })
   }
 
 

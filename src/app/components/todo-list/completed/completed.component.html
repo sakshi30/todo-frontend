@@ -12,10 +12,6 @@
   </div>
   
   <table mat-table [dataSource]='_dataSource' matSort multiTemplateDataRows>
-    <ng-container matColumnDef='date'>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Created on</th>
-      <td mat-cell *matCellDef="let element">{{element.date | date: 'short' }}</td>
-    </ng-container>
     <ng-container matColumnDef='value'>
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">to-do</th>
       <td mat-cell *matCellDef="let element">{{element.value}}</td>
@@ -26,7 +22,33 @@
     </ng-container>
     <ng-container matColumnDef='status'>
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Status</th>
-      <td mat-cell *matCellDef="let element">{{element.status}}</td>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.status=='In Progress'">
+          <button mat-button [matMenuTriggerFor]="menu" class="progress-switch">In
+            Progress</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+        <div *ngIf="element.status=='Not Started'">
+          <button mat-button [matMenuTriggerFor]="started" class="not-started-switch">Not Started</button>
+          <mat-menu #started="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+        <div *ngIf="element.status=='Completed'">
+          <button mat-button [matMenuTriggerFor]="completed" class="completed-switch">Completed</button>
+          <mat-menu #completed="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+        <div *ngIf="element.status=='Cancelled'">
+          <button mat-button [matMenuTriggerFor]="cancelled" class="cancelled-switch">Cancelled</button>
+          <mat-menu #cancelled="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+      </td>
     </ng-container>
     <ng-container matColumnDef='dueDate'>
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Due Date</th>

@@ -19,16 +19,13 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
  
-  public created_task: Task = {value: '', label: [], status: [], dueDate: {}}
+  public created_task: Task = {value: '', label: [], status: '', dueDate: {}}
   public tasks: ToDo =  {userId: '', task: this.created_task, label: [], status: []};
   visible = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   labelCtrl = new FormControl();
   filteredLabels: Observable<string[]>;
   all_labels: string[] = [];
-  all_status: string[] =[];
-  statusCtrl = new FormControl();
-  filteredStatus: Observable<string[]>;
   updated_task = false;
   data_subscription: Subscription;
   status = new FormControl();
@@ -52,7 +49,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       }
       else{
         this.updated_task = result.update;
-        this.created_task = {value: '', label: [], status: [], dueDate: {}};
+        this.created_task = {value: '', label: [], status: '', dueDate: {}};
       }
     })
     
@@ -60,11 +57,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       this.filteredLabels = this.labelCtrl.valueChanges.pipe(
         startWith(null),
         map((label: string | null) => label ? this._filter(label) : this.tasks.label.slice()));
-
-      this.filteredStatus = this.statusCtrl.valueChanges.pipe(
-        startWith(null),
-        map((status: string | null) => status ? this._filterStatus(status) : this.tasks.status.slice()));
     }
+    this.tasks.status = ['Not Started', 'In Progress', 'Completed', 'Cancelled'];
     
    }
 
@@ -92,40 +86,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.labelCtrl.setValue(null);
   }
 
-  addStatus(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our fruit
-    if ((value || '').trim()) {
-      if(!this.all_status.includes(value.trim())){
-        this.all_status.push(value.trim());
-        this.created_task.status.push(value.trim());
-      }
-      
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-
-    this.statusCtrl.setValue(null);
-  }
 
   remove(label: string): void {
     const index = this.created_task.label.indexOf(label);
 
     if (index >= 0) {
       this.created_task.label.splice(index, 1);
-    }
-  }
-
-  removeStatus(status: string): void {
-    const index = this.created_task.status.indexOf(status);
-
-    if (index >= 0) {
-      this.created_task.status.splice(index, 1);
     }
   }
 
@@ -137,10 +103,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   }
 
   selectedStatus(stat): void {
-    if(!this.created_task.status.includes(stat))
-    this.created_task.status.push(stat);
+    this.created_task.status = stat
     this.statusInput.nativeElement.value = '';
-    this.statusCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
@@ -149,16 +113,11 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     return this.tasks.label.filter(label => label.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  private _filterStatus(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.tasks.status.filter(status => status.toLowerCase().indexOf(filterValue) === 0);
-  }
-
 
   createTask(){
     var data = {}
-    data['val'] = {task: this.created_task, label: this.all_labels, status: this.all_status}
+    data['val'] = {task: this.created_task, label: this.all_labels, status: this.created_task.status}
+    console.log(data)
     this._todo.storeData(this.tasks.userId, data).subscribe(result => {
       this._toast.success(result.status);
       this.resetForm();
@@ -171,7 +130,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   resetForm(){
     this.created_task.value = '';
     this.created_task.label = [];
-    this.created_task.status = [];
+    this.created_task.status = '';
     this.created_task.dueDate = {};
   }
 

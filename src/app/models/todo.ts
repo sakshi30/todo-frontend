@@ -9,5 +9,5 @@ export interface Task{
     value: string;
     dueDate:  any;
     label: string[];
-    status: string[];
+    status: string;
 }

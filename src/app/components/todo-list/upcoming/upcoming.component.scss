@@ -36,3 +36,42 @@ tr:hover {
   opacity: 1;
   color: white;
 }
+
+.completed-switch {
+  width: 150px;
+  background: #BFEBD4 0% 0% no-repeat padding-box;
+  border-radius: 33px;
+  opacity: 1;
+  color: #319F5D;
+  text-align: center;
+}
+
+.not-started-switch {
+  width: 150px;
+  background: #FFE9BE 0% 0% no-repeat padding-box;
+  border-radius: 33px;
+  opacity: 1;
+  color: #E8AC2E;
+  text-align: center;
+}
+
+.progress-switch {
+  width: 150px;
+  background: #C8D8FC 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 1;
+  color: #507EDE;
+  text-align: center;
+  outline: none;
+}
+button{
+  outline: none;
+}
+.cancelled-switch {
+  width: 150px;
+  background: #FCC8D5 0% 0% no-repeat padding-box;
+  border-radius: 33px;
+  opacity: 1;
+  color: #C64F6C;
+  text-align: center;
+}

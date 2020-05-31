@@ -16,7 +16,8 @@ export class ArchiveComponent implements OnInit {
 
   private _todo: any[] = [];
   private _curr: any;
-  private _cols: string[] = ['date', 'value', 'label', 'status', 'dueDate', 'action'];
+  private _cols: string[] = ['value', 'label', 'status', 'dueDate', 'action'];
+  public all_status = ['Not Started', 'In Progress', 'Completed', 'Cancelled']
   private _dataSource: any;
 
   public userId: any;
@@ -85,6 +86,17 @@ export class ArchiveComponent implements OnInit {
       this._toast.success("Task has been unarchieved")
     }, (error) => {
       this._toast.error("Unable to unarchieve this task")
+    })
+  }
+
+  changeStatus(element, status){
+    var object = { val: {}, taskId: '' }
+    object.taskId = element._id;
+    object.val = { status: status };
+    this._list.updateTask(object).subscribe(result => {
+      element.status = status
+    }, (error) => {
+      this._toast.error("Unable to change the status")
     })
   }
 
