@@ -35,7 +35,7 @@ export class AddLabelComponent implements OnInit {
 
 
   createLabel(){
-    let data = {'val': { 'label': this.label } };
+    let data = {'val': {'label': this.label } };
     this._list.storeData(this.userId, data).subscribe(result => {
       if(result){
         this._matRef.close();
@@ -58,7 +58,6 @@ export class AddLabelComponent implements OnInit {
   }
 
   updateLabel(){
-    console.log(this.data);
     this.data.tasks.forEach(task => {
       if(task.label.includes(this.data.update.label)){
         task.label.splice(task.label.indexOf(this.data.update.label), 1);

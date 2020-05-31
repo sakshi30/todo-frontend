@@ -57,7 +57,7 @@ export class HeadComponent implements OnInit, OnDestroy {
   logOut() {
     this.user = null;
     this._auth.logOut();
-    window.location.reload()
+    window.location.reload();
   }
 
 
