@@ -15,11 +15,16 @@ import { MatPaginator } from '@angular/material/paginator';
 export class UpcomingComponent implements OnInit {
 
   private _todo: any[] = [];
-
   private _curr: any;
   private _cols: string[] = ['value', 'label', 'status', 'dueDate', 'action'];
   private _dataSource: any;
-  public taskId: any;
+
+  private _label: any;
+  private _status: any;
+
+  public userId: any;
+
+  private _
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
@@ -33,12 +38,24 @@ export class UpcomingComponent implements OnInit {
 
   _filterTasks(event){
     //let userId = this._auth.sendUserDetails()._id;
-    let userId = '5ec3c5187ea72e2c5cdedd80';
+    let userId = '5ed33094de8023303093c09e';
     var yesterday = new Date(new Date().getTime());
     this._curr = yesterday.setDate(new Date().getDate() - 1);
-    this._list.getTaskList(userId, 0).subscribe(data => {
+    
+    this._list.getLabelList(userId).subscribe(data => {
+      console.log(data);
+      this._label = JSON.parse(data)
+    });
+    this._list.getStatusList(userId).subscribe(data => {
+      console.log(data);
+      this._status = JSON.parse(data)
+    });
+
+    console.log(this._label, this._status);
+
+    this._list.getUpcomingTask(userId).subscribe(data => {
       let tasks = JSON.parse(data);
-      this.taskId = tasks[0]._id
+      console.log(tasks);
       if(event.target){
         this._todo = [];
         var task = event.target.value;   
@@ -104,7 +121,7 @@ export class UpcomingComponent implements OnInit {
 
 
   deleteItem(element) {
-    this._list.deleteTask(1, this.taskId, element._id).subscribe(result => {
+    this._list.deleteTask(this.userId, element._id).subscribe(result => {
       this._todo = this._todo.filter(el => el._id != element._id)
       this._dataSource = new MatTableDataSource(this._todo);
       this._dataSource.sort = this.sort;

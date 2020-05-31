@@ -32,8 +32,8 @@ export class LabelComponent implements OnInit {
 
   _filterLabels(event){
     //this.userId = this._auth.sendUserDetails()._id;
-    this.userId = '5ec3c5187ea72e2c5cdedd80';
-    this._list.getLabelList(this.userId).subscribe(data => {   
+    this.userId = '5ed33094de8023303093c09e';
+    this._list.getTaskMetaList(this.userId).subscribe(data => {
       this.tasks = JSON.parse(data)['task']; 
       this.all_labels = JSON.parse(data)['label']
       if(event.target){
@@ -57,6 +57,7 @@ export class LabelComponent implements OnInit {
         })
       }
       else{
+        console.log(data);
         JSON.parse(data)['label'].forEach(element => {
           var task_number = 0;
           var archieved_task = 0;

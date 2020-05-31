@@ -157,13 +157,11 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
 
   createTask(){
-    var object = {userId: '', val: {}}
-    object.userId = this.tasks.userId;
-    object.val = {task: this.created_task, label: this.all_labels, status: this.all_status}
-    this._todo.storeData(object).subscribe(result => {
+    var data = {}
+    data['val'] = {task: this.created_task, label: this.all_labels, status: this.all_status}
+    this._todo.storeData(this.tasks.userId, data).subscribe(result => {
       this._toast.success(result.status);
       this.resetForm();
-
     }, (error) => {
       this._toast.error(error);
     })

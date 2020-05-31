@@ -22,7 +22,7 @@ export class AddStatusComponent implements OnInit {
 
   ngOnInit(): void {
     //this.userId = this._auth.sendUserDetails()._id;
-    this.userId = '5ec3c5187ea72e2c5cdedd80';
+    this.userId = '5ed33094de8023303093c09e';
     this.status = this.data.update.status
     if(this.data.update != ''){
       this.update = true
@@ -34,7 +34,8 @@ export class AddStatusComponent implements OnInit {
 
 
   createStatus(){
-    this._list.addStatus(this.userId, this.status).subscribe(result => {
+    let data = {'val': { 'status': this.status } };
+    this._list.storeData(this.userId, data).subscribe(result => {
       if(result){
         this._matRef.close();
         this._toast.success(result.status)

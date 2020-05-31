@@ -15,11 +15,12 @@ import { MatPaginator } from '@angular/material/paginator';
 export class ArchiveComponent implements OnInit {
 
   private _todo: any[] = [];
-
   private _curr: any;
   private _cols: string[] = ['date', 'value', 'label', 'status', 'dueDate', 'action'];
   private _dataSource: any;
-  public taskId: any;
+
+  public userId: any;
+
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -37,8 +38,8 @@ export class ArchiveComponent implements OnInit {
   _filterTasks(event) {
     var yesterday = new Date(new Date().getTime());
     this._curr = yesterday.setDate(new Date().getDate() - 1);
-    let tasks = this._auth.sendTaskDetails()[0]
-    this.taskId = tasks._id
+    let tasks = this._auth.sendTaskDetails()[0];
+    this.userId = tasks.userId;
     if (event.target) {
       this._todo = [];
       var task = event.target.value;
@@ -89,7 +90,7 @@ export class ArchiveComponent implements OnInit {
 
 
   deleteItem(element) {
-    this._list.deleteTask(1, this.taskId, element._id).subscribe(result => {
+    this._list.deleteTask(this.userId, element._id).subscribe(result => {
       this._todo = this._todo.filter(el => el._id != element._id)
       this._dataSource = new MatTableDataSource(this._todo);
       this._dataSource.sort = this.sort;
