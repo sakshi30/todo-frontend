@@ -26,25 +26,7 @@ front-end for todolist
       - update profile info options (name, password etc)
 
 # to-do
-  - sending due date with 'add task'
-  - add new label
-  - add new status
-  - displaying due date in 'upcoming tasks list', 'archieved tasks list', 'label details list', 'status detils list'
-  - dividing non-archieved tasks into 'upcoming' or 'completed' based on 'due date'
-  - edit: new page, particular item
-    - edit task option in 'upcoming tasks list', 'archieved tasks list', 'label details list', 'status detils list'
-  - edit: same page, particular item
-    - edit label option in 'label details list' page
-    - edit status option in 'status details list' page
-  - delete: same page, checkboxes
-    - delete task option in 'upcoming tasks list', 'archieved tasks list', 'label details list', 'status detils list'
-    - delete label option in 'label details list'
-    - delete status option in 'status details list'
-  - delete: same page, particular item
-    - delete task option in 'update task' page
-    - delete label option in 'label details' page
-    - delete status option in 'status details' page
-  - user profile page
-    - change name option
-    - change password option
   - working with css and themes to make the project visually appealing.
+  - dashboard
+  - switching between archieve and unarchieve still doesn't work.
+  - updation also doesn't display in archieve. //similar to above problem

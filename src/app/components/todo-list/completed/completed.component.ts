@@ -17,7 +17,7 @@ export class CompletedComponent implements OnInit {
   private _todo: any[] = [];
 
   private _curr: any;
-  private _cols: string[] = ['value', 'label', 'status', 'dueDate', 'action'];
+  private _cols: string[] = ['value', 'label', 'status', 'progress', 'dueDate', 'action'];
   public all_status = ['Not Started', 'In Progress', 'Completed', 'Cancelled']
   private _dataSource: any;
   public userId: string;

@@ -31,6 +31,9 @@ import { AddStatusComponent } from './add-status/add-status.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectTrigger, MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,19 @@ import { MatMenuModule } from '@angular/material/menu';
     MatPaginatorModule,
     MatSelectModule,
     MatChipsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSliderModule,
+    NgCircleProgressModule.forRoot({
+      maxPercent: 100,
+      radius: 20,
+      responsive: false,
+      showZeroOuterStroke: true,
+      showUnits: false,
+      titleFontSize: '10',
+      showSubtitle: false,
+      innerStrokeWidth: 2,
+      outerStrokeWidth: 1
+    })
   ],
   providers: [MatDatepickerModule],
   entryComponents: [AddLabelComponent, AddStatusComponent]

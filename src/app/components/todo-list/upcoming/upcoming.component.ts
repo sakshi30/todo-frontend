@@ -16,7 +16,7 @@ export class UpcomingComponent implements OnInit {
 
   private _todo: any[] = [];
   private _curr: any;
-  private _cols: string[] = ['value', 'label', 'status', 'dueDate', 'action'];
+  private _cols: string[] = ['value', 'label', 'status', 'progress', 'dueDate', 'action'];
   private _dataSource: any;
   public all_status = ['Not Started', 'In Progress', 'Completed', 'Cancelled']
   private _label: any;

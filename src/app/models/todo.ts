@@ -10,4 +10,5 @@ export interface Task{
     dueDate:  any;
     label: string[];
     status: string;
+    progress: number;
 }

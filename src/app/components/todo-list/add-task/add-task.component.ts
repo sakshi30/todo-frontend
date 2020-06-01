@@ -19,7 +19,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
  
-  public created_task: Task = {value: '', label: [], status: '', dueDate: {}}
+  public created_task: Task = {value: '', label: [], status: '', dueDate: {}, progress: 0}
   public tasks: ToDo =  {userId: '', task: this.created_task, label: [], status: []};
   visible = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -49,7 +49,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       }
       else{
         this.updated_task = result.update;
-        this.created_task = {value: '', label: [], status: '', dueDate: {}};
+        this.created_task = {value: '', label: [], status: '', dueDate: {}, progress: 0};
       }
     })
     
@@ -137,7 +137,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   updateTask(){
     var object = {userid: '', val: {}, taskId: ''}
     object.taskId = Object(this.created_task)._id;
-    object.val = {value: this.created_task.value, label: this.created_task.label, status: this.created_task.status, dueDate: this.created_task.dueDate};
+    object.val = {value: this.created_task.value, label: this.created_task.label, status: this.created_task.status, dueDate: this.created_task.dueDate, progress: this.created_task.progress};
     object.userid = this.tasks.userId;
     console.log(object)
     this._todo.updateTask(object).subscribe(result => {
