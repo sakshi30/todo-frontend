@@ -28,5 +28,3 @@ front-end for todolist
 # to-do
   - working with css and themes to make the project visually appealing.
   - dashboard
-  - switching between archieve and unarchieve still doesn't work.
-  - updation also doesn't display in archieve. //similar to above problem

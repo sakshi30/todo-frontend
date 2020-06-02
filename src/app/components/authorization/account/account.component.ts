@@ -43,6 +43,7 @@ export class AccountComponent implements OnInit {
 
   saveUser(){
     this._auth.saveUser(this.user).subscribe(result => {
+      this._auth.sendDetails(this.user)
       this._toast.success(result.status)
     }, (error) => {
       this._toast.error(error);

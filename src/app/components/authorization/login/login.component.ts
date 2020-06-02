@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this._auth.loginUser(this.user)
       .subscribe(loggedUser => {
         this._toast.success(loggedUser.status)
-        this._router.navigate(['/upcoming'])
+        this._router.navigate(['/dashboard'])
       }, error => {
         this._toast.error(error)
       })

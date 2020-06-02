@@ -42,18 +42,21 @@
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-            <!-- <mat-form-field> -->
-              <mat-slider
-                [min] = 0
-                [max] = 100
-                [step] = 5
-                [thumbLabel] = true
-                [value] = 0
-                [tickInterval] = 0
-                [(ngModel)]="created_task.progress">
-              </mat-slider>
-            <!-- </mat-form-field> -->
         </div>
+        <b>Mark your progress:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{created_task.progress}}% Completed
+        <!-- <mat-form-field> -->
+          <mat-slider class="w-100 h-100"
+          [color]="'primary'"
+          [min] = 0
+          [max] = 100
+          [step] = 5
+          [thumbLabel] = true
+          [value] = 0
+          [tickInterval] = 0
+          [(ngModel)]="created_task.progress">
+        </mat-slider>
+      <!-- </mat-form-field> -->
+      `<br/><br/>
         <button mat-button (click)="createTask()" class="button" *ngIf="!updated_task">Create Task</button>
         <button mat-button (click)="updateTask()" class="button" *ngIf="updated_task">Update Task</button>
         <br/><br/><br/>

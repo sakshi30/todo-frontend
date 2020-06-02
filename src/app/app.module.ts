@@ -13,11 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatMenuModule } from '@angular/material/menu';
+import { DashboardModule } from './components/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeadComponent
+    HeadComponent  
   ],
   imports: [
     BrowserModule,
@@ -28,6 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     FlexLayoutModule,
     MatMenuModule,
+    DashboardModule.forRoot(),
     ToastrModule.forRoot(),
     AuthorizationModule.forRoot(),
     TodoListModule.forRoot()

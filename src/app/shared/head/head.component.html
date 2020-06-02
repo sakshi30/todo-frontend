@@ -17,7 +17,12 @@
   <div class="menu"
     style="background: #FFFFFF 0% 0% no-repeat padding-box;box-shadow: 0px 3px 8px #3C775A21;opacity: 1;">
     <div class="p-3 position-absolute" style="font-size: 16px; padding-left: 40px;">
-      <button mat-button (click)="menuBtnClicked('upcoming')" id='menu-upcoming' class='menu-btn active'>
+      <button mat-button (click)="menuBtnClicked('dashboard')" id='menu-dashboard' class='menu-btn active'>
+        <mat-icon aria-hidden="false">dashboard</mat-icon>
+        &nbsp;&nbsp;&nbsp;&nbsp;Dashboard
+      </button>
+      <br /><br />
+      <button mat-button (click)="menuBtnClicked('upcoming')" id='menu-upcoming' class='menu-btn'>
         <mat-icon aria-hidden="false">arrow_upward</mat-icon>
         &nbsp;&nbsp;&nbsp;&nbsp;Upcoming Tasks
       </button>
