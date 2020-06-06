@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatMenuModule } from '@angular/material/menu';
 import { DashboardModule } from './components/dashboard/dashboard.module';
+import { DevelopersModule } from './components/developers/developers.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DashboardModule } from './components/dashboard/dashboard.module';
     DashboardModule.forRoot(),
     ToastrModule.forRoot(),
     AuthorizationModule.forRoot(),
-    TodoListModule.forRoot()
+    TodoListModule.forRoot(),
+    DevelopersModule.forRoot()
   ],
   providers: [
   ],
