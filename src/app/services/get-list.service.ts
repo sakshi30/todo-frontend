@@ -31,6 +31,10 @@ export class GetListService {
   getArchievedTask(userId): Observable<any> {
     return this.getTaskList(userId, 1);
   }
+
+  getAllTasks(userId): Observable<any> {
+    return this.getTaskList(userId, 2);
+  }
   /* */
 
   storeData(userId, data): Observable<any>{

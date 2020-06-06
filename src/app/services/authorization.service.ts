@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from "rxjs/operators";
 import { HandleErrorService } from './handle-error.service';
+import { Task } from '../models/todo';
 
 @Injectable({
   providedIn: 'root'

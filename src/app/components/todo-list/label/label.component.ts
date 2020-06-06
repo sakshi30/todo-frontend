@@ -6,6 +6,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLabelComponent } from '../add-label/add-label.component';
 import { ToastrService } from 'ngx-toastr';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-label',
@@ -21,7 +22,7 @@ export class LabelComponent implements OnInit {
   public tasks: any[] = [];
   public all_labels: any[] = [];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
     private _list: GetListService,
     private _auth: AuthorizationService,
@@ -31,8 +32,7 @@ export class LabelComponent implements OnInit {
   }
 
   _filterLabels(event){
-    //this.userId = this._auth.sendUserDetails()._id;
-    this.userId = '5ed33094de8023303093c09e';
+    this.userId = this._auth.sendUserDetails()._id;
     this._list.getTaskMetaList(this.userId).subscribe(data => {
       this.tasks = JSON.parse(data)['task']; 
       this.all_labels = JSON.parse(data)['label']
@@ -77,6 +77,8 @@ export class LabelComponent implements OnInit {
       }
       this._dataSource = new MatTableDataSource(this._labels);
       this._dataSource.sort = this.sort;
+      this._dataSource.paginator = this.paginator;
+
     });
     return this._labels;
   }

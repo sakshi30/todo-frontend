@@ -3,6 +3,7 @@ import { GetListService } from 'src/app/services/get-list.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-add-label',
@@ -19,11 +20,11 @@ export class AddLabelComponent implements OnInit {
     private _list: GetListService,
     private _toast: ToastrService,
     private _matRef: MatDialogRef<AddTaskComponent>,
+    private _auth: AuthorizationService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    //this.userId = this._auth.sendUserDetails()._id;
-    this.userId = '5ed33094de8023303093c09e';
+    this.userId = this._auth.sendUserDetails()._id;
     this.label = this.data.update.label
     if(this.data.update != ''){
       this.update = true

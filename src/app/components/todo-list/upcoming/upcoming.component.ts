@@ -37,30 +37,17 @@ export class UpcomingComponent implements OnInit {
   }
 
   _filterTasks(event){
-    //let userId = this._auth.sendUserDetails()._id;
-    this.userId = '5ed33094de8023303093c09e';
+    this.userId = this._auth.sendUserDetails()._id;
     var yesterday = new Date(new Date().getTime());
     this._curr = yesterday.setDate(new Date().getDate() - 1);
-    
-    /*this._list.getLabelList(this.userId).subscribe(data => {
-      console.log(data);
-      this._label = JSON.parse(data)
-    });
-    this._list.getStatusList(this.userId).subscribe(data => {
-      console.log(data);
-      this._status = JSON.parse(data)
-    });*/
-
 
     this._list.getUpcomingTask(this.userId).subscribe(data => {
       let tasks = JSON.parse(data);
-      console.log(tasks);
       if(event.target){
         this._todo = [];
         var task = event.target.value;   
         var data_label = tasks.filter(s => s.task.value.includes(task))
         data_label.forEach(ele => {
-          console.log(ele['task'])
           if (!ele['task'].archieved && new Date(ele['task']['dueDate']).getTime() >= this._curr && ele['task']['status'] != 'Completed') {
             // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
             this._todo.push(ele['task']);
@@ -72,7 +59,6 @@ export class UpcomingComponent implements OnInit {
       }
       else{
         tasks.forEach(ele => {
-          console.log(ele['task'])
           if (!ele['task'].archieved && new Date(ele['task']['dueDate']).getTime() >= this._curr && ele['task']['status'] != 'Completed') {
             // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
             this._todo.push(ele['task']);

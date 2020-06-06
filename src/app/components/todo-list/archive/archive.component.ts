@@ -23,7 +23,7 @@ export class ArchiveComponent implements OnInit {
   public userId: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private _list: GetListService,
     private _router: Router,
@@ -39,27 +39,30 @@ export class ArchiveComponent implements OnInit {
   _filterTasks(event) {
     var yesterday = new Date(new Date().getTime());
     this._curr = yesterday.setDate(new Date().getDate() - 1);
-    let tasks = this._auth.sendTaskDetails()[0];
-    this.userId = tasks.userId;
-    if (event.target) {
-      this._todo = [];
-      var task = event.target.value;
-      var data_label = tasks.task.filter(s => s.value.includes(task))
-      data_label.forEach(ele => {
-        this._todo.push(ele);
-      });
-      this._dataSource = new MatTableDataSource(this._todo);
-      this._dataSource.sort = this.sort;
-      this._dataSource.paginator = this.paginator;
-    }
-    else {
-      tasks['task'].forEach(ele => {
-        if (ele.archieved) this._todo.push(ele);
-      });
-      this._dataSource = new MatTableDataSource(this._todo);
-      this._dataSource.sort = this.sort;
-      this._dataSource.paginator = this.paginator;
-    }
+    this.userId = this._auth.sendUserDetails()._id;
+    this._list.getArchievedTask(this.userId).subscribe(data => {
+      let tasks = JSON.parse(data);
+      if (event.target) {
+        this._todo = [];
+        var task = event.target.value;
+        var data_label = tasks.filter(s => s.task.value.includes(task))
+        data_label.forEach(ele => {
+          this._todo.push(ele['task']);
+        });
+        this._dataSource = new MatTableDataSource(this._todo);
+        this._dataSource.sort = this.sort;
+        this._dataSource.paginator = this.paginator;
+      }
+      else {
+        tasks.forEach(ele => {
+          console.log('task', ele)
+          this._todo.push(ele['task']);
+        });
+        this._dataSource = new MatTableDataSource(this._todo);
+        this._dataSource.sort = this.sort;
+        this._dataSource.paginator = this.paginator;
+      }
+    });
   }
 
   createTask() {
@@ -89,7 +92,7 @@ export class ArchiveComponent implements OnInit {
     })
   }
 
-  changeStatus(element, status){
+  changeStatus(element, status) {
     var object = { val: {}, taskId: '' }
     object.taskId = element._id;
     object.val = { status: status };

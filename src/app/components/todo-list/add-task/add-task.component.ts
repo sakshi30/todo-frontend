@@ -117,30 +117,23 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   createTask(){
     var data = {}
     data['val'] = {task: this.created_task, label: this.all_labels, status: this.created_task.status}
-    console.log(data)
     this._todo.storeData(this.tasks.userId, data).subscribe(result => {
+      this._router.navigate(['/dashboard'])
       this._toast.success(result.status);
-      this.resetForm();
+
     }, (error) => {
       this._toast.error(error);
     })
   }
 
 
-  resetForm(){
-    this.created_task.value = '';
-    this.created_task.label = [];
-    this.created_task.status = '';
-    this.created_task.dueDate = {};
-  }
-
   updateTask(){
     var object = {userid: '', val: {}, taskId: ''}
     object.taskId = Object(this.created_task)._id;
     object.val = {value: this.created_task.value, label: this.created_task.label, status: this.created_task.status, dueDate: this.created_task.dueDate, progress: this.created_task.progress};
     object.userid = this.tasks.userId;
-    console.log(object)
     this._todo.updateTask(object).subscribe(result => {
+      this._router.navigate(['/dashboard'])
       this._toast.success(result.status);
 
     }, (error) => {

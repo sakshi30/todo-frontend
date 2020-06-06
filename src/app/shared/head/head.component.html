@@ -1,5 +1,5 @@
 <div *ngIf="isLoggedIn">
-  <div class="p-2" style="z-index: 10001; font-size: 16px;">
+  <div class="fixed-top" style="z-index: 10001; background-color: white;">
     <br />
     <span style="padding-left: 40px;">TO-DO List</span>
     <div class="header-right">
@@ -20,6 +20,11 @@
       <button mat-button (click)="menuBtnClicked('dashboard')" id='menu-dashboard' class='menu-btn active'>
         <mat-icon aria-hidden="false">dashboard</mat-icon>
         &nbsp;&nbsp;&nbsp;&nbsp;Dashboard
+      </button>
+      <br /><br />
+      <button mat-button (click)="menuBtnClicked('addTask')" id='menu-addTask' class='menu-btn'>
+        <mat-icon aria-hidden="false">add</mat-icon>
+        &nbsp;&nbsp;&nbsp;&nbsp;Create Task
       </button>
       <br /><br />
       <button mat-button (click)="menuBtnClicked('upcoming')" id='menu-upcoming' class='menu-btn'>

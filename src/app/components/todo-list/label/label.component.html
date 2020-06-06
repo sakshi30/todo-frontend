@@ -1,5 +1,5 @@
 <div class="container">
-  <br/>
+  <br /><br /><br /><br />
   <h2><b>Labels</b></h2>
 
   <div class="add_new">
@@ -39,4 +39,5 @@
     <tr mat-header-row *matHeaderRowDef="_cols; sticky: true;"></tr>
     <tr mat-row *matRowDef="let row; columns: _cols"></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

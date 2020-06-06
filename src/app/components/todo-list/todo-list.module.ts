@@ -5,10 +5,8 @@ import { ToDoListRoutingModule } from './todo-list-router.module';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { LabelComponent } from './label/label.component';
-import { StatusComponent } from './status/status.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { LabelDetComponent } from './label-det/label-det.component';
-import { StatusDetComponent } from './status-det/status-det.component';
 import { CompletedComponent } from './completed/completed.component';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +25,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddLabelComponent } from './add-label/add-label.component';
-import { AddStatusComponent } from './add-status/add-status.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectTrigger, MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
@@ -41,12 +38,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     ArchiveComponent,
     AddTaskComponent,
     LabelComponent,
-    StatusComponent,
     LabelDetComponent,
-    StatusDetComponent,
     CompletedComponent,
-    AddLabelComponent,
-    AddStatusComponent
+    AddLabelComponent
   ],
   imports: [
     CommonModule,
@@ -85,7 +79,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     })
   ],
   providers: [MatDatepickerModule],
-  entryComponents: [AddLabelComponent, AddStatusComponent]
+  entryComponents: [AddLabelComponent]
 })
 export class TodoListModule { 
   static forRoot() {

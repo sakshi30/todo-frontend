@@ -1,27 +1,60 @@
 <div class="container">
-  <br/><br/>
+  <br /><br /><br /><br />
   <h2><b>{{_label}}</b></h2>
-  <div class="header-right">
-    <button mat-button (click)="createTask()" class="button"><mat-icon>add</mat-icon> Add Task</button>
-    <br/><br/>
+  <div>
+    <button mat-button (click)="createTask()" class="button header-right"><mat-icon>add</mat-icon> Add Task</button>
+    <br/><br/><br/>
+    <mat-form-field class="w-100 h-100" appearance="outline">
+      <mat-label>Search Task</mat-label>
+      <input matInput placeholder="Search Task" (keyup)="_filterTasks($event)">
+    </mat-form-field>
+    <br/>
   </div>
   
   <table mat-table [dataSource]='_dataSource' matSort multiTemplateDataRows>
-    <ng-container matColumnDef='date'>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Created on</th>
-      <td mat-cell *matCellDef="let element">{{element.date | date: 'short' }}</td>
-    </ng-container>
     <ng-container matColumnDef='value'>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg"> to-do</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">My Activity</th>
       <td mat-cell *matCellDef="let element">{{element.value}}</td>
     </ng-container>
     <ng-container matColumnDef='label'>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Label</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Labels</th>
       <td mat-cell *matCellDef="let element">{{element.label}}</td>
     </ng-container>
     <ng-container matColumnDef='status'>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Status</th>
-      <td mat-cell *matCellDef="let element">{{element.status}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Current Status</th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.status=='In Progress'">
+          <button mat-button [matMenuTriggerFor]="menu" class="progress-switch">In
+            Progress</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+        <div *ngIf="element.status=='Not Started'">
+          <button mat-button [matMenuTriggerFor]="started" class="not-started-switch">Not Started</button>
+          <mat-menu #started="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+        <div *ngIf="element.status=='Completed'">
+          <button mat-button [matMenuTriggerFor]="completed" class="completed-switch">Completed</button>
+          <mat-menu #completed="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+        <div *ngIf="element.status=='Cancelled'">
+          <button mat-button [matMenuTriggerFor]="cancelled" class="cancelled-switch">Cancelled</button>
+          <mat-menu #cancelled="matMenu">
+            <button mat-menu-item *ngFor="let item of all_status" (click)="changeStatus(element, item)">{{item}}</button>
+          </mat-menu>
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef='progress'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Progress</th>
+      <td mat-cell *matCellDef="let element">
+        <circle-progress [percent]="element.progress"></circle-progress>
+      </td>
     </ng-container>
     <ng-container matColumnDef='dueDate'>
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="dark_bg">Due Date</th>
@@ -30,12 +63,24 @@
     <ng-container matColumnDef='action'>
       <th mat-header-cell *matHeaderCellDef class="dark_bg">Action</th>
       <td mat-cell *matCellDef="let element">
-        <span class="option" (click)="editItem(element)" style="cursor: pointer;"><mat-icon>edit</mat-icon></span>
+        <span class="option" (click)="editItem(element)" style="cursor: pointer;" *ngIf="element.status!='Completed'"> 
+          <mat-icon>edit</mat-icon>
+        </span>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <span class="option" (click)="unarchiveItem(element)" style="cursor: pointer;"><mat-icon>arrow_upward</mat-icon></span>
+        <span class="option" (click)="archiveItem(element)" style="cursor: pointer;" *ngIf="!element.archieved">
+          <mat-icon>archive</mat-icon>
+        </span>
+        <span class="option" (click)="unarchiveItem(element)" style="cursor: pointer;" *ngIf="element.archieved">
+          <mat-icon>arrow_upward</mat-icon>
+        </span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="option" (click)="deleteItem(element)" style="cursor: pointer;">
+          <mat-icon>delete</mat-icon>
+        </span>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="_cols; sticky: true;"></tr>
     <tr mat-row *matRowDef="let row; columns: _cols"></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

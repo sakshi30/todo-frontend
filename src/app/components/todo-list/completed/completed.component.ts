@@ -34,11 +34,11 @@ export class CompletedComponent implements OnInit {
   }
 
   _filterTasks(event) {
-    this.userId = '5ed33094de8023303093c09e';
+    this.userId = this._auth.sendUserDetails()._id;
     var yesterday = new Date(new Date().getTime());
     this._curr = yesterday.setDate(new Date().getDate() - 1);
 
-    this._list.getUpcomingTask(this.userId).subscribe(data => {
+    this._list.getAllTasks(this.userId).subscribe(data => {
       let tasks = JSON.parse(data);
       console.log(tasks);
       if (event.target) {
@@ -57,7 +57,6 @@ export class CompletedComponent implements OnInit {
       }
       else {
         tasks.forEach(ele => {
-          console.log(ele['task'])
           if (ele['task']['status'] == 'Completed') {
             // if(ele['task']['dueDate']<this._curr) //convert this to 'due date' later, not yet implemented in the backend
             this._todo.push(ele['task']);
@@ -105,6 +104,30 @@ export class CompletedComponent implements OnInit {
       this._toast.success("Task deleted sccessfully")
     }, (error) => {
       this._toast.error("Unable to delete the task")
+    })
+  }
+
+  archiveItem(element) {
+    element.archieved = true;
+    var object = { val: {}, taskId: '' }
+    object.taskId = element._id;
+    object.val = { archieved: element.archieved };
+    this._list.updateTask(object).subscribe(result => {
+      this._toast.success("Task has been archieved")
+    }, (error) => {
+      this._toast.error("Unable to archieve this task")
+    })
+  }
+
+  unarchiveItem(element) {
+    element.archieved = false;
+    var object = { val: {}, taskId: '' }
+    object.taskId = element._id;
+    object.val = { archieved: element.archieved };
+    this._list.updateTask(object).subscribe(result => {
+      this._toast.success("Task has been unarchieved")
+    }, (error) => {
+      this._toast.error("Unable to unarchieve this task")
     })
   }
 

@@ -1,3 +1,4 @@
+
 h3 {
     margin: 0 0 10px;
   }
@@ -11,3 +12,14 @@ h3 {
     background-color: #57b846;
     color: white;
   }
+.cal-month-view .cal-day-badge {
+  background-color: #57b846;
+  color: #fff; }
+
+.cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
+  color: #57b846; }
+
+.cal-week-view .cal-event {
+  background-color: #d1e8ff;
+  border-color: #1e90ff;
+  color: white }

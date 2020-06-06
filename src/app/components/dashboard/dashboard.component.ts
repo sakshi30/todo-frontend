@@ -3,17 +3,13 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
-  OnInit
+  OnInit,
+  AfterViewInit
 } from '@angular/core';
 import {
   startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
   isSameDay,
-  isSameMonth,
-  addHours,
+  isSameMonth
 } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -23,20 +19,15 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { GetListService } from 'src/app/services/get-list.service';
+import { User } from 'src/app/models/user';
 
 const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
+  green: {
+    primary: '#57b846',
+    secondary: '#57b846',
+  }
 };
 @Component({
   selector: 'app-dashboard',
@@ -45,7 +36,33 @@ const colors: any = {
 })
 export class DashboardComponent implements OnInit {
 
+
+  public tasks = [];
+  public user: User;
+  constructor(private modal: NgbModal,
+    private _auth: AuthorizationService,
+    private _list: GetListService) {
+  }
+
   ngOnInit(): void {
+    this.user = this._auth.sendUserDetails()._id;
+    console.log(this.user)
+    this._list.getTaskMetaList(this.user).subscribe(async (result) => {
+      await JSON.parse(result)['task'].forEach(task => {
+        var object = {
+          start: startOfDay(new Date(task.dueDate)),
+          title: task.value,
+          color: colors.green,
+          actions: this.actions,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          }
+        }
+        this.events.push(object)
+      })
+    })
+    
   }
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
@@ -81,49 +98,10 @@ export class DashboardComponent implements OnInit {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
   ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
-  constructor(private modal: NgbModal) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -162,26 +140,7 @@ export class DashboardComponent implements OnInit {
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -190,6 +149,6 @@ export class DashboardComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-  
+
 
 }
