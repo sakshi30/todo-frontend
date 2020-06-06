@@ -31,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSliderModule } from '@angular/material/slider';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { AllTasksComponent } from './all-tasks/all-tasks.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     LabelComponent,
     LabelDetComponent,
     CompletedComponent,
-    AddLabelComponent
+    AddLabelComponent,
+    AllTasksComponent
   ],
   imports: [
     CommonModule,

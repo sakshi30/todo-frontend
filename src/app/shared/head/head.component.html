@@ -27,6 +27,11 @@
         &nbsp;&nbsp;&nbsp;&nbsp;Create Task
       </button>
       <br /><br />
+      <button mat-button (click)="menuBtnClicked('allTasks')" id='menu-allTasks' class='menu-btn'>
+        <mat-icon aria-hidden="false">list</mat-icon>
+        &nbsp;&nbsp;&nbsp;&nbsp;All Tasks
+      </button>
+      <br /><br />
       <button mat-button (click)="menuBtnClicked('upcoming')" id='menu-upcoming' class='menu-btn'>
         <mat-icon aria-hidden="false">arrow_upward</mat-icon>
         &nbsp;&nbsp;&nbsp;&nbsp;Upcoming Tasks

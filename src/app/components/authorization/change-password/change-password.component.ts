@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,7 +16,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _auth: AuthorizationService,
-    private _toast: ToastrService) { }
+    private _toast: ToastrService,
+    private _router: Router) { }
 
   ngOnInit(): void {
     this.route
@@ -29,6 +30,7 @@ export class ChangePasswordComponent implements OnInit {
 
   changePassword(){
     this._auth.changePassword(this.user).subscribe(result => {
+      this._router.navigate(['/login'])
       this._toast.success(result.status)
     }, (error) => {
       this._toast.error(error)

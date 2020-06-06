@@ -10,9 +10,10 @@ table {
   width: 100%;
 }
 
-th.mat-sort-header-sorted {
-  color: black;
+::ng-deep .mat-sort-header-arrow {
+  color: white;
 }
+
 
 .mat-table-sticky {
   border-top: 1px solid;
