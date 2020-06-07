@@ -45,6 +45,9 @@ export class HeadComponent implements OnInit, OnDestroy {
   }
 
   menuBtnClicked(btn) {
+    if(btn=='wiki'){
+      window.open("https://github.com/sakshi30/todo-frontend/wiki", "_blank");
+    }
     let activeBtn = document.getElementsByClassName('active');
     for (let i = 0; i < activeBtn.length; i++) {
       activeBtn.item(i).classList.remove('active');
